@@ -2,10 +2,12 @@ function Player(x, y) {
 	this.x = x;
 	this.y = y;
 	this.speed = 2;
-	this.spriteSrc = "images/playersprite.png"; //create!
+	this.spriteSrc = "images/playersprite.png"; //tee uusi hahmo
 	this.width = 22; //määrittele spritesheetin perusteella!!!
 	this.height = 28;
 	this.characterImage = null;
+	this.frameX = 0;
+	this.frameY = 0;
 }
 
 Player.prototype.getImage = function(path) {
@@ -17,4 +19,66 @@ Player.prototype.getImage = function(path) {
 	};
 	characterImage.src = path;
 	return characterImage;
+};
+
+Player.prototype.move = function(canvas) {
+	this.canvas = canvas;
+	if (this.isMoving === true) {
+		if (this.direction === "left") {
+			this.moveLeft();
+		}
+		if (this.direction === "up") {
+			this.moveUp();
+		}
+		if (this.direction === "right") {
+			this.moveRight();
+		}
+		if (this.direction === "down") {
+			this.moveDown();
+		}
+	}
+	else {
+		this.frameY = 0;
+	}
+};
+
+
+Player.prototype.moveLeft = function() {
+	if (this.x > 0) {
+		this.x -= this.speed;
+		this.frameY = 3;
+	}
+	else {
+		this.x = 0;
+	}
+};
+
+Player.prototype.moveUp = function() {
+	if (this.y > 64) {
+		this.y -= this.speed;
+		this.frameY = 2;
+	}
+	else {
+		this.y = 64;
+	}
+};
+
+Player.prototype.moveRight = function() {
+	if (this.x < canvas.width - this.width) {
+		this.x += this.speed;
+		this.frameY = 4;
+	}
+	else {
+		this.x = canvas.width - this.width;
+	}
+};
+
+Player.prototype.moveDown = function() {
+	if (this.y < canvas.height - this.height) {
+		this.y += this.speed;
+		this.frameY = 1;
+	}
+	else {
+		this.y = canvas.height - this.height;
+	}
 };

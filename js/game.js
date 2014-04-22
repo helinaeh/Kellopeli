@@ -10,6 +10,7 @@ window.onload = function() {
 var format = function() {
 	setCanvas();
 	createPlayer();
+	addEventListeners();
 };
 
 var setCanvas = function() {
@@ -34,6 +35,50 @@ var createPlayer = function() {
 	playerImg = player.getImage(player.spriteSrc);
 };
 
+var addEventListeners = function() {
+	directions = new Array();
+	directions[0] = "left";
+	directions[1] = "up";
+	directions[2] = "right";
+	directions[3] = "down";
+
+	//disable default use of arrow keys
+	window.addEventListener("keydown", function(e) {
+    	if([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        	e.preventDefault();
+    	}
+	}, false);
+
+	//use of arrow keys
+	window.addEventListener("keydown", function(e) {
+		//left arrow
+		if (e.keyCode == 37) {
+			player.direction = directions[0];
+			player.isMoving = true;
+		}
+		//up arrow
+		if (e.keyCode == 38) {
+			player.direction = directions[1];
+			player.isMoving = true;
+		}
+		//right arrow
+		if (e.keyCode == 39) {
+			player.direction = directions[2];
+			player.isMoving = true;
+		}
+		//down arrow
+		if (e.keyCode == 40) {
+			player.direction = directions[3];
+			player.isMoving = true;
+		}
+	}, false);
+
+	window.addEventListener("keyup", function(e) {
+		player.isMoving = false;
+	}, false);
+	
+};
+
 var animate = function() {
 	timer();
 	clear();
@@ -54,13 +99,11 @@ var clear = function() {
 
 var render = function() {
 	//ctx.drawImage(bgImage, 0, 0, 400, 400, 0, 0, canvas.width, canvas.height);
-
 	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
 };
 
 var update = function() {
 	player.move(canvas);
-
 	updateSprite();
 };
 
