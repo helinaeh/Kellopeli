@@ -54,12 +54,12 @@ Player.prototype.moveLeft = function() {
 };
 
 Player.prototype.moveUp = function() {
-	if (this.y > 64) {
+	if (this.y > 0) {
 		this.y -= this.speed;
 		this.frameY = 2;
 	}
 	else {
-		this.y = 64;
+		this.y = 0;
 	}
 };
 
