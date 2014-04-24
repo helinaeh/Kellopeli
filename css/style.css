@@ -1,3 +1,20 @@
+html, body {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+header {
+	text-align: center;
+	font-size: 24px;
+	margin-top: 20px;
+}
+
 #game {
 	background-color: pink;
+	display: block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 20px;
 }

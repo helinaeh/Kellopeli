@@ -16,7 +16,7 @@ var format = function() {
 var setCanvas = function() {
 	canvas = document.getElementById("game");
 	ctx = canvas.getContext("2d");
-	canvas.width = 888;
+	canvas.width = 900;
 	canvas.height = 500;
 	//setBackground();
 };
