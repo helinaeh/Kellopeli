@@ -1,4 +1,4 @@
-function Wall(y,) {
+function Wall(y) {
 	Obstacle.call(y, "images/wallsprite.png", wal, 10, false);
 }
 
