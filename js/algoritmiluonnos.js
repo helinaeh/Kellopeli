@@ -69,7 +69,7 @@ function addObstacles(car, hom, gar, wor, watch) {
 function addWalls() {
 	for (h = 0; h < 10; h++) { // käy läpi indeksit
 		if (yArray.indexOf(h) == -1) {
-
+			new Wall(h*50)
 		} // lisää seinän (joka on 50px korkea)
 	}
 };
