@@ -6,15 +6,14 @@ saa vielä hirveesti ideaa selville kun on vielö niin kesken...
 counter = 0; // +1 aina kun uusi seinämä tehdään
 obsProb = 0.1; // todnäk jolla seinään tulee "avattava" este
 
-function Algoritmi(car, hou, gar, wor, watch) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
+function Algoritmi(car, hom, gar, wor, watch) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
 
 	this.a = 0; // +1 kun lisätään seinämään este    // Saattaa olla turha, pitää kattoa
 	/* 
-	Toi alla oleva merkintä on varmaan väärin, onks js:ssä buffereita tai vastaavia??
 	Anyway siihen lisätään esteen täyttämät "indeksit" kun se este luodaan (jos esim este
 	jonka korkeus on 200 lisätään kohtaan 150, niin se täyttää indeksit 150, 200, 250, 300)
 	*/
-	this.yBuffer = Buffer();
+	this.yArray = [];
 
 	addHole;
 
@@ -32,24 +31,30 @@ function addHole() {
 function addObstacles() {
 	
 	if (a < count % 10) { //lisätään auto (ehkä)
-		if(/* Random, todennäköisyydellä obsProb */) {
-			new Car(!!!/* Random kohta */)
-			yBuffer += !!!; //äsken lisätyn esteen "indeksit" (kts. ylempää)
+		if(Math.random() <= obsProb) {
+			var position = 0
+			do {
+				position = Math.round(Math.random() * 10) *  50
+			} while (yArray.indexOf(position));
+			new Car(!!!/* Random kohta */, car)
+			yArray += !!!; //äsken lisätyn esteen "indeksit" (kts. ylempää)
 			a = a + 1;
 		}
 	}
 
 	if (a < count % 20) { //lisätään talo (ehkä)
 		if(/* Random, todennäköisyydellä obsProb */) {
-			new House(!!!/* Random kohta */)
-			yBuffer += !!!; //äsken lisätyn esteen "indeksit" (kts. ylempää)
+			new Home(!!!/* Random kohta */, hom)
+			yArray += !!!; //äsken lisätyn esteen "indeksit" (kts. ylempää)
 			a = a + 1;
 		}
 	}
 }
 
 function addWalls() {
-	for (h <- 1 to 10) { // käy läpi kentän korkeuden (10 välein)
-		if () // jos sillä "indeksillä", ts. siinä kohdassa, ei ole estettä, niin lisää seinän (joka on 10px korkea)
+	for (h <- 1 to 10) { // käy läpi kentän korkeuden (50 välein)
+		if (yArray.indexOf(h*50) == -1) {
+
+		} // lisää seinän (joka on 10px korkea)
 	}
 }
