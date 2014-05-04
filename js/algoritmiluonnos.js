@@ -3,17 +3,19 @@ Ekaa luonnosta oon miettiny siltä pohjalta mitä ollaan puhuttu, ei varmaan kyl
 saa vielä hirveesti ideaa selville kun on vielö niin kesken...
 */
 
-counter = 0; // +1 aina kun uusi seinämä tehdään
-obsProb = 0.1; // todnäk jolla seinään tulee "avattava" este
+var counter = 0; // +1 aina kun uusi seinämä tehdään
+var obsProb = 0.1; // todnäk jolla seinään tulee "avattava" este
+var yArray = [];
 
 function Algoritmi(car, hom, gar, wor, watch) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
 
-	this.a = 0; // +1 kun lisätään seinämään este    // Saattaa olla turha, pitää kattoa
+	var a = 0; // +1 kun lisätään seinämään este    // Saattaa olla turha, pitää kattoa
 	/* 
 	Anyway siihen lisätään esteen täyttämät "indeksit" kun se este luodaan (jos esim este
-	jonka korkeus on 200 lisätään kohtaan 150, niin se täyttää indeksit 150, 200, 250, 300)
+	jonka korkeus on 200 lisätään kohtaan 150, niin se täyttää indeksit 150/50=3, 200/50=4,
+	 250/50=5, 300/50=6)
 	*/
-	this.yArray = [];
+	yArray = [];
 
 	addHole;
 
@@ -22,39 +24,72 @@ function Algoritmi(car, hom, gar, wor, watch) { // Parametrit ovat true/false-ar
 	addWalls;
 
 	count = count + 1;
-}
+};
 
 function addHole() {
 	
-}
+};
 
 function addObstacles(car, hom, gar, wor, watch) {
-	
-	if (a < count % 10) { //lisätään auto (ehkä)
-		if(Math.random() <= obsProb) {
-			var position = 0
-			do {
-				position = Math.round(Math.random() * 10) *  50
-			} while (yArray.indexOf(position) != -1);
-			new Car(!!!/* Random kohta */, car)
+
+	for (i = 0; i < count % 40; i++) { //lisätään työpaikka (ehkä)
+		if(Math.random() <= obsProb * 0.4) {
+			new Home(randomPosition(4), wor || watch);
 			yArray += !!!; //äsken lisätyn esteen "indeksit" (kts. ylempää)
-			a = a + 1;
+			a = a + 1; // turha??
 		}
 	}
 
-	if (a < count % 20) { //lisätään talo (ehkä)
-		if(/* Random, todennäköisyydellä obsProb */) {
-			new Home(!!!/* Random kohta */, hom)
+	for (i = 0; i < count % 30; i++) { //lisätään koti (ehkä)
+		if(Math.random() <= obsProb * 0.6) {
+			new Home(randomPosition(3), hom || watch);
 			yArray += !!!; //äsken lisätyn esteen "indeksit" (kts. ylempää)
-			a = a + 1;
+			a = a + 1; // turha??
 		}
 	}
-}
+
+	for (i = 0; i < count % 20; i++) { //lisätään autotalli (ehkä)
+		if(Math.random() <= obsProb * 0.8) {
+			new Garage(randomPosition(2), gar || watch);
+			yArray += !!!; //äsken lisätyn esteen "indeksit" (kts. ylempää)
+			a = a + 1; // turha??
+		}
+	}
+
+	for (i = 0; i < count % 10; i++) { //lisätään auto (ehkä)
+		if(Math.random() <= obsProb) {
+			new Car(randomPosition(1), car || watch);
+			yArray += !!!; //äsken lisätyn esteen "indeksit" (kts. ylempää)
+			a = a + 1; // turha??
+		}
+	}
+};
 
 function addWalls() {
 	for (h <- 1 to 10) { // käy läpi kentän korkeuden (50 välein)
 		if (yArray.indexOf(h*50) == -1) {
 
-		} // lisää seinän (joka on 10px korkea)
+		} // lisää seinän (joka on 50px korkea)
 	}
-}
+};
+
+function randomPosition(height) {
+	var result = 0;
+	do {
+		result = Math.round(Math.random() * 10) *  50
+	} while (!Empty(result, height));
+};
+
+function Empty(result, height) {
+	var res = false;
+	for (i = result; i < result + height; i++) {
+		if (yArray.indexOf(i) != -1) res = true
+	}
+	res
+};
+
+
+
+
+
+
