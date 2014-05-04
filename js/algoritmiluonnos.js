@@ -9,7 +9,7 @@ var yArray = [];
 
 function Algoritmi(car, hom, gar, wor, watch) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
 
-	var a = 0; // +1 kun lisätään seinämään este    // Saattaa olla turha, pitää kattoa
+	var a = 0; // +1 kun lisätään seinämään este    // Ei ole turha, pitää palauttaa lopuksi !!
 	/* 
 	Anyway siihen lisätään esteen täyttämät "indeksit" kun se este luodaan (jos esim este
 	jonka korkeus on 200 lisätään kohtaan 150, niin se täyttää indeksit 150/50=3, 200/50=4,
@@ -58,16 +58,17 @@ function addObstacles(car, hom, gar, wor, watch) {
 
 	for (i = 0; i < count % 10; i++) { //lisätään auto (ehkä)
 		if(Math.random() <= obsProb) {
-			new Car(randomPosition(1), car || watch);
-			yArray += !!!; //äsken lisätyn esteen "indeksit" (kts. ylempää)
+			var position = randomPosition(1);
+			new Car(position, car || watch);
+			yArray += position; //äsken lisätyn esteen "indeksit" (kts. ylempää)
 			a = a + 1; // turha??
 		}
 	}
 };
 
 function addWalls() {
-	for (h <- 1 to 10) { // käy läpi kentän korkeuden (50 välein)
-		if (yArray.indexOf(h*50) == -1) {
+	for (h = 0; h < 10; h++) { // käy läpi indeksit
+		if (yArray.indexOf(h) == -1) {
 
 		} // lisää seinän (joka on 50px korkea)
 	}
@@ -76,7 +77,7 @@ function addWalls() {
 function randomPosition(height) {
 	var result = 0;
 	do {
-		result = Math.round(Math.random() * 10) *  50
+		result = Math.round(Math.random() * 10)
 	} while (!Empty(result, height));
 };
 
