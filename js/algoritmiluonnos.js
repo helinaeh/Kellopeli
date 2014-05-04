@@ -17,7 +17,7 @@ function Algoritmi(car, hom, gar, wor, watch) { // Parametrit ovat true/false-ar
 
 	addHole;
 
-	addObstacles;
+	addObstacles(car, hom, gar, wor, watch);
 
 	addWalls;
 
@@ -28,14 +28,14 @@ function addHole() {
 	
 }
 
-function addObstacles() {
+function addObstacles(car, hom, gar, wor, watch) {
 	
 	if (a < count % 10) { //lisätään auto (ehkä)
 		if(Math.random() <= obsProb) {
 			var position = 0
 			do {
 				position = Math.round(Math.random() * 10) *  50
-			} while (yArray.indexOf(position));
+			} while (yArray.indexOf(position) != -1);
 			new Car(!!!/* Random kohta */, car)
 			yArray += !!!; //äsken lisätyn esteen "indeksit" (kts. ylempää)
 			a = a + 1;
