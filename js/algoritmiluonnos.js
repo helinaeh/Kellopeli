@@ -27,7 +27,9 @@ function Algoritmi(car, hom, gar, wor, watch) { // Parametrit ovat true/false-ar
 };
 
 function addHole() {
-	
+	var position = randomPosition(1);
+	yArray += position;
+	yArray += position + 1;
 };
 
 function addObstacles(car, hom, gar, wor, watch) {
@@ -79,6 +81,7 @@ function randomPosition(height) {
 	do {
 		result = Math.round(Math.random() * 10)
 	} while (!Empty(result, height));
+	result
 };
 
 function Empty(result, height) {
