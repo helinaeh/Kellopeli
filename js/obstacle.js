@@ -1,10 +1,11 @@
-function Obstacle(y, spriteSrc, type, height) {
+function Obstacle(y, spriteSrc, type, height, greyed) {
 	this.x = 900; //este luodaan pelinäkymän ulkopuolelle
 	this.y = y;
 	this.width = 20;
 	this.height = height;
 	this.spriteSrc = spriteSrc;
 	this.type = type;
+	this.greyed = greyed;
 }
 
 /*

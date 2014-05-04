@@ -12,7 +12,7 @@ function Algoritmi(car, hou, gar, wor, watch) { // Parametrit ovat true/false-ar
 	/* 
 	Toi alla oleva merkintä on varmaan väärin, onks js:ssä buffereita tai vastaavia??
 	Anyway siihen lisätään esteen täyttämät "indeksit" kun se este luodaan (jos esim este
-	jonka korkeus on 40 lisätään kohtaan 150, niin se täyttää indeksit 150, 160, 170, 180)
+	jonka korkeus on 200 lisätään kohtaan 150, niin se täyttää indeksit 150, 200, 250, 300)
 	*/
 	this.yBuffer = Buffer();
 
@@ -49,7 +49,7 @@ function addObstacles() {
 }
 
 function addWalls() {
-	for (h <- 1 to 50) { // käy läpi kentän korkeuden (10 välein)
+	for (h <- 1 to 10) { // käy läpi kentän korkeuden (10 välein)
 		if () // jos sillä "indeksillä", ts. siinä kohdassa, ei ole estettä, niin lisää seinän (joka on 10px korkea)
 	}
 }
