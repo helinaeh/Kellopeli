@@ -8,7 +8,20 @@ function Player(x, y) {
 	this.characterImage = null;
 	this.frameX = 0;
 	this.frameY = 0;
+	this.keys = {};
 }
+
+Player.prototype.createKeys = function() {
+	this.keys.key1 = false;
+	this.keys.key2 = false;
+	this.keys.key3 = false;
+	this.keys.key4 = false;
+	console.log(this.keys);
+};
+
+Player.prototype.addKey = function(id) {
+	this.keys.id = true; //lisää id:n objektiin ja antaa sille arvoksi true
+};
 
 Player.prototype.getImage = function(path) {
 	this.path = path;

@@ -1,5 +1,5 @@
 function Work(y) {
-	Obstacle.call(y, "images/worksprite.png", wor, 60);
+	Obstacle.call(y, "images/worksprite.png", 4, 60);
 }
 
 Work.prototype = new Obstacle();

@@ -33,6 +33,8 @@ var setBackground = function() {
 var createPlayer = function() {
 	player = new Player(canvas.width/2-playerSpriteX/2, canvas.height/2-playerSpriteY/2);
 	playerImg = player.getImage(player.spriteSrc);
+	player.createKeys();
+	player.addKey("key2");
 };
 
 var addEventListeners = function() {
