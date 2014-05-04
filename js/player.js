@@ -20,7 +20,18 @@ Player.prototype.createKeys = function() {
 };
 
 Player.prototype.addKey = function(id) {
-	this.keys.id = true; //lisää id:n objektiin ja antaa sille arvoksi true
+	if (id == "key1") {
+		this.keys.key1 = true;
+	}
+	else if (id == "key2") {
+		this.keys.key2 = true;
+	}
+	else if (id == "key3") {
+		this.keys.key3 = true;
+	}
+	else if (id == "key4") {
+		this.keys.key4 = true;
+	}
 };
 
 Player.prototype.getImage = function(path) {

@@ -18,7 +18,7 @@ var setCanvas = function() {
 	ctx = canvas.getContext("2d");
 	canvas.width = 900;
 	canvas.height = 500;
-	//setBackground();
+	setBackground();
 };
 
 var setBackground = function() {
@@ -27,14 +27,15 @@ var setBackground = function() {
 	bgImage.onload = function () {
 		bgReady = true;
 	};
-	bgImage.src = "images/background.png"; //tee tausta!
+	bgImage.src = "images/background.png";
+	console.log("tausta piirretty");
 }
 
 var createPlayer = function() {
 	player = new Player(canvas.width/2-playerSpriteX/2, canvas.height/2-playerSpriteY/2);
 	playerImg = player.getImage(player.spriteSrc);
 	player.createKeys();
-	player.addKey("key2");
+	//player.addKey("key1");
 };
 
 var addEventListeners = function() {
@@ -100,7 +101,7 @@ var clear = function() {
 };
 
 var render = function() {
-	//ctx.drawImage(bgImage, 0, 0, 400, 400, 0, 0, canvas.width, canvas.height);
+	ctx.drawImage(bgImage, 0, 0, 800, 500, 0, 0, canvas.width, canvas.height);
 	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
 };
 
