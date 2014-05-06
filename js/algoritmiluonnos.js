@@ -13,8 +13,8 @@ function Algoritmi(car, hom, gar, wor, watch) { // Parametrit ovat true/false-ar
 	var a = 0; // +1 kun lisätään seinämään este
 	/* 
 	Anyway siihen lisätään esteen täyttämät "indeksit" kun se este luodaan (jos esim este
-	jonka korkeus on 200 lisätään kohtaan 150, niin se täyttää indeksit 150/50=3, 200/50=4,
-	 250/50=5, 300/50=6)
+	jonka korkeus on 140 lisätään kohtaan 105, niin se täyttää indeksit 105/35=3, 140/35=4,
+	 175/35=5, 210/35=6)
 	*/
 	yArray = [];
 
@@ -28,24 +28,27 @@ function Algoritmi(car, hom, gar, wor, watch) { // Parametrit ovat true/false-ar
 };
 
 function addHole() {
-	var position = randomPosition(1);
-	if () yArray += position;
-	if (count < 50 || Math.random() <= obsProp) yArray += position + 1;
+	var position = Math.round(Math.random() * 12);
+	var holeSize = 3;
+	var x = 0;
+	if (count > 80 && Math.random() < 0.03) return
+	do {
+		yArray.push(position);
+		position = position + 1;
+		x = x + 1;
+	} while (x < holeSize - Math.round(Math.random() - 0.4) - (count % 25));
 };
 
 function addObstacles(car, hom, gar, wor, watch) {
 
-	position = 0;
+	var position = 0;
 
 	for (i = 0; i < count % 40; i++) { //lisätään työpaikka (ehkä)
 		if(Math.random() <= obsProp * 0.4) {
 			position = randomPosition(4);
 			if (!(position == -1)) {
 				obsArray += new Home(position, wor || watch);
-				yArray += position; //äsken lisätyn esteen "indeksit" (kts. ylempää)
-				yArray += position + 1;
-				yArray += position + 2;
-				yArray += position + 3;
+				yArray.push(position, position+1, position+2, position+3); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			};
 		};
@@ -56,9 +59,7 @@ function addObstacles(car, hom, gar, wor, watch) {
 			position = randomPosition(3);
 			if (!(position == -1)) {
 				obsArray += new Home(position, hom || watch);
-				yArray += position; //äsken lisätyn esteen "indeksit" (kts. ylempää)
-				yArray += position + 1;
-				yArray += position + 2;
+				yArray.push(position, position+1, position+2); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			};
 		};
@@ -69,8 +70,7 @@ function addObstacles(car, hom, gar, wor, watch) {
 			position = randomPosition(2);
 			if (!(position == -1)) {
 				obsArray += new Garage(position, gar || watch);
-				yArray += position; //äsken lisätyn esteen "indeksit" (kts. ylempää)
-				yArray += position + 1;
+				yArray.push(position, position+1); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			};
 		};
@@ -81,7 +81,7 @@ function addObstacles(car, hom, gar, wor, watch) {
 			position = randomPosition(1);
 			if (!(position == -1)) {
 				obsArray += new Car(position, car || watch);
-				yArray += position; //äsken lisätyn esteen "indeksit" (kts. ylempää)
+				yArray.push(position); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			};
 		};
@@ -91,8 +91,8 @@ function addObstacles(car, hom, gar, wor, watch) {
 function addWalls() {
 	for (h = 0; h < 10; h++) { // käy läpi indeksit
 		if (yArray.indexOf(h) == -1) {
-			obsArray += new Wall(h*50);
-		}; // lisää seinän (joka on 50px korkea)
+			obsArray += new Wall(h*35);
+		}; // lisää seinän (joka on 35px korkea)
 	}
 };
 
@@ -105,9 +105,9 @@ function randomPosition(height) {
 	} while (!isEmpty(result, height));
 	*/
 	for (i = 0; i < 10; i++) {
-		result = Math.round(Math.random() * 10);
+		result = Math.round(Math.random() * 15);
 		if (isEmpty(result, height)) {
-			return result;
+			break;
 		} else result = -1;
 	}
 
