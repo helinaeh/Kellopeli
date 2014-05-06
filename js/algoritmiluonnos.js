@@ -1,15 +1,11 @@
-/*
-Ekaa luonnosta oon miettiny siltä pohjalta mitä ollaan puhuttu, ei varmaan kyllä 
-saa vielä hirveesti ideaa selville kun on vielö niin kesken...
-*/
-
 var count = 0; // +1 aina kun uusi seinämä tehdään
 var obsProp = 0.1; // todnäk jolla seinään tulee "avattava" este
 var yArray = [];
-var obsArray = [];
 var a = 0;
 
-function createObstacleWall(car, hom, gar, wor, watch) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
+var createObstacleWall = function(car, hom, gar, wor, watch) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
+
+	console.log("tulee algoritmiin");
 
 	a = 0; // +1 kun lisätään seinämään este
 	/* 
@@ -28,7 +24,7 @@ function createObstacleWall(car, hom, gar, wor, watch) { // Parametrit ovat true
 	count = count + 1;
 }
 
-function addHole() {
+var addHole = function() {
 	var position = Math.round(Math.random() * 12);
 	var holeSize = 3;
 	var x = 0;
@@ -40,7 +36,7 @@ function addHole() {
 	} while (x < holeSize - Math.round(Math.random() - 0.4) - (count % 25));
 }
 
-function addObstacles(car, hom, gar, wor, watch) {
+var addObstacles = function(car, hom, gar, wor, watch) {
 
 	var position = 0;
 
@@ -48,7 +44,7 @@ function addObstacles(car, hom, gar, wor, watch) {
 		if(Math.random() <= obsProp * 0.4) {
 			position = randomPosition(4);
 			if (position != -1) {
-				obsArray.push(new Work(position, wor || watch));
+				obstacle.push(new Work(position, wor || watch));
 				yArray.push(position, position+1, position+2, position+3); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			}
@@ -59,7 +55,7 @@ function addObstacles(car, hom, gar, wor, watch) {
 		if(Math.random() <= obsProp * 0.6) {
 			position = randomPosition(3);
 			if (position != -1) {
-				obsArray += new Home(position, hom || watch);
+				obstacle.push(Home(position, hom || watch));
 				yArray.push(position, position+1, position+2); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			}
@@ -70,7 +66,7 @@ function addObstacles(car, hom, gar, wor, watch) {
 		if(Math.random() <= obsProp * 0.8) {
 			position = randomPosition(2);
 			if (position != -1) {
-				obsArray += new Garage(position, gar || watch);
+				obstacle.push(new Garage(position, gar || watch));
 				yArray.push(position, position+1); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			}
@@ -81,7 +77,7 @@ function addObstacles(car, hom, gar, wor, watch) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(1);
 			if (position != -1) {
-				obsArray += new Car(position, car || watch);
+				obstacle.push(new Car(position, car || watch));
 				yArray.push(position); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			}
@@ -89,15 +85,17 @@ function addObstacles(car, hom, gar, wor, watch) {
 	}
 }
 
-function addWalls() {
+var addWalls = function() {
 	for (var h = 0; h < 10; h++) { // käy läpi indeksit
+		console.log("addWalls-loop");
 		if (yArray.indexOf(h) == -1) {
-			obsArray += new Wall(h*35);
+			console.log("menee iffiin");
+			obstacle.push(new Wall(h*35));
 		} // lisää seinän (joka on 35px korkea)
 	}
 }
 
-function randomPosition(height) {
+var randomPosition = function(height) {
 	var result = -1;
 	/*
 	ensimmäinen versio, tämä olisi jatkanut paikan arpomista loputtomiin jos tarpeeksi isoa paikkaa ei ole
@@ -115,16 +113,10 @@ function randomPosition(height) {
 	return result;
 }
 
-function isEmpty(result, height) {
+var isEmpty = function(result, height) {
 	var res = false;
 	for (var i = result; i < result + height; i++) {
 		if (yArray.indexOf(i) != -1) res = true;
 	}
 	return res;
 }
-
-
-
-
-
-
