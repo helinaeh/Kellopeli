@@ -1,4 +1,4 @@
-var canvas, ctx, bgImage, player, playerImg, obstacle, obsImg, delta;
+var canvas, ctx, bgImage, player, playerImg, obstacle, carImg, delta;
 var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900;
 var spriteSpeed = 500, sumOfDelta = 0, lastCalledTime = new Date().getTime();
 
@@ -10,7 +10,7 @@ window.onload = function() {
 var format = function() {
 	setCanvas();
 	createPlayer();
-	createObstacle();
+	createObstacles();
 	addEventListeners();
 };
 
@@ -18,10 +18,11 @@ var setCanvas = function() {
 	canvas = document.getElementById("game");
 	ctx = canvas.getContext("2d");
 	canvas.width = 900;
-	canvas.height = 500;
+	canvas.height = 525;
 	setBackground();
 };
 
+//kaikkien getImagejen siirtäminen playerilta ja obstaclelta game-luokkaan!!!
 var setBackground = function() {
 	var bgReady = false;
 	bgImage = new Image();
@@ -38,10 +39,28 @@ var createPlayer = function() {
 	//player.addKey("key1");
 };
 
-var createObstacle = function() {
+var createObstacles = function() {
 	obstacle = new Array();
+	randomiseObstacles();
+};
+
+var randomiseObstacles = function() {
+	var obsImages = new Array();
+	obsImages.push(false, false, false, false); //PAREMPI VAIHTOEHTO: luodaan kaikkien esteiden kuvat heti alussa!
 	obstacle[0] = new Car(200, false);
-	obsImg = obstacle[0].getImage();
+	obstacle[1] = new Car(300, false);
+	carImg = obstacle[0].getImage();
+
+	/*
+	
+	while () { //niin kauan, kun peli jatkuu
+		//luo uusi random este
+		//tutkitaan, mikä esteen avainluku on (eli mikä este kyseessä)
+		//jos obsImages[avainluku-1] == true, niin ei lisätä kuvaa
+		//jos false, niin getImage();
+	}
+
+	*/
 };
 
 var addEventListeners = function() {
@@ -98,7 +117,7 @@ var animate = function() {
 	window.setTimeout(function() {
 		requestId = window.requestAnimationFrame(animate);	
 	}, 3000);
-*/
+	*/
 };
 
 var timer = function() {
@@ -116,8 +135,7 @@ var render = function() {
 	ctx.drawImage(bgImage, 0, 0, 900, 500, bgX1, 0, canvas.width, canvas.height);
 	ctx.drawImage(bgImage, 0, 0, 900, 500, bgX2, 0, canvas.width, canvas.height);
 	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
-	console.log(obsImg.src);
-	ctx.drawImage(obsImg, 0, 0, 50, 50, 100, 100, 50, 50);
+	ctx.drawImage(carImg, 0, 0, 35, 35, obstacle[0].x, obstacle[0].y, obstacle[0].width, obstacle[0].height);
 };
 
 var updateBg = function() {
