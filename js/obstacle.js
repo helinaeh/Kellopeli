@@ -7,6 +7,7 @@ function Obstacle(y, spriteSrc, type, height, greyed) {
 	this.type = type;
 	this.greyed = greyed;
 	this.obsImage = null;
+	this.speed = 1;
 }
 
 Obstacle.prototype.getImage = function() {
@@ -18,6 +19,13 @@ Obstacle.prototype.getImage = function() {
 	obsImage.src = this.spriteSrc;
 	console.log(this.spriteSrc);
 	return obsImage;
+};
+
+Obstacle.prototype.move = function(canvas) {
+	this.canvas = canvas;
+	if (this.x > -35) {
+		this.x -= this.speed;
+	}
 };
 
 /*

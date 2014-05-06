@@ -48,7 +48,7 @@ var randomiseObstacles = function() {
 	var obsImages = new Array();
 	obsImages.push(false, false, false, false); //PAREMPI VAIHTOEHTO: luodaan kaikkien esteiden kuvat heti alussa!
 	obstacle[0] = new Car(200, false);
-	obstacle[1] = new Car(300, false);
+	//obstacle[1] = new Car(300, false);
 	carImg = obstacle[0].getImage();
 
 	/*
@@ -131,11 +131,24 @@ var clear = function() {
 };
 
 var render = function() {
-	updateBg();
 	ctx.drawImage(bgImage, 0, 0, 900, 500, bgX1, 0, canvas.width, canvas.height);
 	ctx.drawImage(bgImage, 0, 0, 900, 500, bgX2, 0, canvas.width, canvas.height);
 	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
-	ctx.drawImage(carImg, 0, 0, 35, 35, obstacle[0].x, obstacle[0].y, obstacle[0].width, obstacle[0].height);
+	for (var i = 0; i < obstacle.length; i++) {
+		if (obstacle[i].type == 1) {
+			ctx.drawImage(carImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+		}
+	}
+};
+
+var update = function() {
+	updateBg();
+	player.move(canvas);
+	for (var i = 0; i < obstacle.length; i++) {
+		obstacle[i].move(canvas);
+	}
+	collisionDetection();
+	updateSprite();
 };
 
 var updateBg = function() {
@@ -149,9 +162,8 @@ var updateBg = function() {
 	}
 };
 
-var update = function() {
-	player.move(canvas);
-	updateSprite();
+var collisionDetection = function() {
+	
 };
 
 var updateSprite = function() {
