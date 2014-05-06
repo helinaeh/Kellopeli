@@ -6,7 +6,19 @@ function Obstacle(y, spriteSrc, type, height, greyed) {
 	this.spriteSrc = spriteSrc;
 	this.type = type;
 	this.greyed = greyed;
+	this.obsImage = null;
 }
+
+Obstacle.prototype.getImage = function() {
+	var characterReady = false;
+	obsImage = new Image();
+	obsImage.onload = function () {
+		characterReady = true;
+	};
+	obsImage.src = this.spriteSrc;
+	console.log(this.spriteSrc);
+	return obsImage;
+};
 
 /*
 Esteen ominaisuuksia:

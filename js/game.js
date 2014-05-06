@@ -1,4 +1,4 @@
-var canvas, ctx, bgImage, player, delta;
+var canvas, ctx, bgImage, player, playerImg, obstacle, obsImg, delta;
 var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900;
 var spriteSpeed = 500, sumOfDelta = 0, lastCalledTime = new Date().getTime();
 
@@ -10,6 +10,7 @@ window.onload = function() {
 var format = function() {
 	setCanvas();
 	createPlayer();
+	createObstacle();
 	addEventListeners();
 };
 
@@ -28,7 +29,6 @@ var setBackground = function() {
 		bgReady = true;
 	};
 	bgImage.src = "images/background.png";
-	//console.log("tausta piirretty");
 }
 
 var createPlayer = function() {
@@ -36,6 +36,12 @@ var createPlayer = function() {
 	playerImg = player.getImage(player.spriteSrc);
 	player.createKeys();
 	//player.addKey("key1");
+};
+
+var createObstacle = function() {
+	obstacle = new Array();
+	obstacle[0] = new Car(200, false);
+	obsImg = obstacle[0].getImage();
 };
 
 var addEventListeners = function() {
@@ -88,6 +94,11 @@ var animate = function() {
 	render();
 	update();
 	requestId = window.requestAnimationFrame(animate);
+	/*
+	window.setTimeout(function() {
+		requestId = window.requestAnimationFrame(animate);	
+	}, 3000);
+*/
 };
 
 var timer = function() {
@@ -101,6 +112,15 @@ var clear = function() {
 };
 
 var render = function() {
+	updateBg();
+	ctx.drawImage(bgImage, 0, 0, 900, 500, bgX1, 0, canvas.width, canvas.height);
+	ctx.drawImage(bgImage, 0, 0, 900, 500, bgX2, 0, canvas.width, canvas.height);
+	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
+	console.log(obsImg.src);
+	ctx.drawImage(obsImg, 0, 0, 50, 50, 100, 100, 50, 50);
+};
+
+var updateBg = function() {
 	bgX1--;
 	if (bgX1 <= -900 ) {
 		bgX1 = 900;
@@ -109,9 +129,6 @@ var render = function() {
 	if (bgX2 <= -900 ) {
 		bgX2 = 900;
 	}
-	ctx.drawImage(bgImage, 0, 0, 900, 500, bgX1, 0, canvas.width, canvas.height);
-	ctx.drawImage(bgImage, 0, 0, 900, 500, bgX2, 0, canvas.width, canvas.height);
-	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
 };
 
 var update = function() {
