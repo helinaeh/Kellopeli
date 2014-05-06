@@ -1,5 +1,5 @@
 var canvas, ctx, bgImage, player, delta;
-var playerSpriteX = 22, playerSpriteY = 28;
+var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900;
 var spriteSpeed = 500, sumOfDelta = 0, lastCalledTime = new Date().getTime();
 
 window.onload = function() {
@@ -28,7 +28,7 @@ var setBackground = function() {
 		bgReady = true;
 	};
 	bgImage.src = "images/background.png";
-	console.log("tausta piirretty");
+	//console.log("tausta piirretty");
 }
 
 var createPlayer = function() {
@@ -101,7 +101,16 @@ var clear = function() {
 };
 
 var render = function() {
-	ctx.drawImage(bgImage, 0, 0, 800, 500, 0, 0, canvas.width, canvas.height);
+	bgX1--;
+	if (bgX1 <= -900 ) {
+		bgX1 = 900;
+	}
+	bgX2--;
+	if (bgX2 <= -900 ) {
+		bgX2 = 900;
+	}
+	ctx.drawImage(bgImage, 0, 0, 900, 500, bgX1, 0, canvas.width, canvas.height);
+	ctx.drawImage(bgImage, 0, 0, 900, 500, bgX2, 0, canvas.width, canvas.height);
 	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
 };
 
