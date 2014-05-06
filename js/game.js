@@ -154,18 +154,50 @@ var update = function() {
 
 var updateBg = function() {
 	bgX1--;
-	if (bgX1 <= -900 ) {
+	if (bgX1 <= -900) {
 		bgX1 = 900;
 	}
 	bgX2--;
-	if (bgX2 <= -900 ) {
+	if (bgX2 <= -900) {
 		bgX2 = 900;
 	}
 };
 
 var collisionDetection = function() {
-	
+	for (var i = 0; i <  obstacle.length; i++) {
+		if (obstacle[i].x < player.x + player.width  && obstacle[i].x + obstacle[i].width  > player.x &&
+				obstacle[i].y < player.y + player.height && obstacle[i].y + obstacle[i].height > player.y) {
+			
+			//jos pelaaja liikkuu oikealle tai ei liiku lainkaan
+			if (player.direction == "right" || player.isMoving == false) {
+				player.x = obstacle[i].x - player.width;
+			}
+			//jos pelaaja liikkuu vasemmalle
+			else if (player.direction == "left") {
+				player.x = obstacle[i].x + obstacle[i].width;
+			}
+			else if (player.direction == "up") {
+				player.y = obstacle[i].y + obstacle[i].height;
+			}
+			else if (player.direction == "down") {
+				player.y = obstacle[i].y - player.height;
+			}
+
+			console.log("Törmäys!");
+		}
+	}
 };
+
+/*
+if (this.x < canvas.width - this.width) {
+		this.x += this.speed;
+		this.frameY = 4;
+	}
+	else {
+		this.x = canvas.width - this.width;
+	}
+	*/
+
 
 var updateSprite = function() {
 	if (sumOfDelta >= spriteSpeed) {

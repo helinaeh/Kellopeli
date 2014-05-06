@@ -9,6 +9,8 @@ function Player(x, y) {
 	this.frameX = 0;
 	this.frameY = 0;
 	this.keys = {};
+	this.isMoving = false;
+	this.direction = null;
 }
 
 Player.prototype.createKeys = function() {
