@@ -25,14 +25,6 @@ var setCanvas = function() {
 //kaikkien getImagejen siirtäminen playerilta ja obstaclelta game-luokkaan!!!
 var setBackground = function() {
 	bgImage = getImage("images/background.png");
-	/*
-	var bgReady = false;
-	bgImage = new Image();
-	bgImage.onload = function () {
-		bgReady = true;
-	};
-	bgImage.src = "images/background.png";
-	*/
 }
 
 var getImage = function(path) {
@@ -48,7 +40,7 @@ var getImage = function(path) {
 
 var createPlayer = function() {
 	player = new Player(canvas.width/2-playerSpriteX/2, canvas.height/2-playerSpriteY/2);
-	//playerImg = player.getImage(player.spriteSrc);
+	//playerImg = player.getImage(player.spriteSrc); //jos käyttää playerin omaa metodia
 	playerImg = getImage("images/playersprite.png");
 	player.createKeys();
 	//player.addKey("key1");
@@ -66,22 +58,7 @@ var createObstacles = function() {
 };
 
 var randomiseObstacles = function() {
-	//var obsImages = new Array();
-	//obsImages.push(false, false, false, false); //PAREMPI VAIHTOEHTO: luodaan kaikkien esteiden kuvat heti alussa!
 	obstacle[0] = new Car(200, false);
-	//obstacle[1] = new Car(300, false);
-	//carImg = obstacle[0].getImage();
-
-	/*
-	
-	while () { //niin kauan, kun peli jatkuu
-		//luo uusi random este
-		//tutkitaan, mikä esteen avainluku on (eli mikä este kyseessä)
-		//jos obsImages[avainluku-1] == true, niin ei lisätä kuvaa
-		//jos false, niin getImage();
-	}
-
-	*/
 };
 
 var addEventListeners = function() {
@@ -160,15 +137,15 @@ var render = function() {
 			ctx.drawImage(carImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 		}
 		else if (obstacle[i].type == 2) {
-			ctx.drawImage(garImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			ctx.drawImage(garImg, 0, 0, 35, 70, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 		}
 		else if (obstacle[i].type == 3) {
-			ctx.drawImage(homeImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			ctx.drawImage(homeImg, 0, 0, 35, 105, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 		}
 		else if (obstacle[i].type == 4) {
-			ctx.drawImage(workImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			ctx.drawImage(workImg, 0, 0, 35, 140, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 		}
-		else if (obstacle[i].type.equals("wal")) {
+		else if (obstacle[i].type == "wal") {
 			ctx.drawImage(wallImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 		}
 	}
@@ -182,7 +159,7 @@ var update = function() {
 	}
 	collisionDetection();
 	updateSprite();
-	updateObstacleWall();
+	//updateObstacleWall();
 };
 
 var updateBg = function() {
@@ -220,17 +197,6 @@ var collisionDetection = function() {
 		}
 	}
 };
-
-/*
-if (this.x < canvas.width - this.width) {
-		this.x += this.speed;
-		this.frameY = 4;
-	}
-	else {
-		this.x = canvas.width - this.width;
-	}
-	*/
-
 
 var updateSprite = function() {
 	if (sumOfDelta >= spriteSpeed) {
