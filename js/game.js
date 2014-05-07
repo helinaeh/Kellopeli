@@ -150,6 +150,7 @@ var update = function() {
 	}
 	collisionDetection();
 	updateSprite();
+	updateObstacleWall();
 };
 
 var updateBg = function() {
@@ -218,6 +219,10 @@ var obsProp = 0.1; // todnäk jolla seinään tulee "avattava" este
 var yArray = [];
 var a = 0;
 
+var updateObstacleWall = function() {
+	
+}
+
 var createObstacleWall = function(car, hom, gar, wor, watch) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
 
 	console.log("tulee algoritmiin");
@@ -249,6 +254,7 @@ var addHole = function() {
 		position = position + 1;
 		x = x + 1;
 	} while (x < holeSize - Math.round(Math.random() - 0.4) - (count % 25));
+	console.log("kolo lisätty");
 }
 
 var addObstacles = function(car, hom, gar, wor, watch) {
@@ -295,6 +301,7 @@ var addObstacles = function(car, hom, gar, wor, watch) {
 				obstacle.push(new Car(position, car || watch));
 				yArray.push(position); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
+				console.log("auto lisätty");
 			}
 		}
 	}
@@ -303,10 +310,11 @@ var addObstacles = function(car, hom, gar, wor, watch) {
 var addWalls = function() {
 	for (var h = 0; h < 15; h++) { // käy läpi indeksit
 		if (yArray.indexOf(h) == -1) {
-			console.log("menee iffiin");
 			obstacle.push(new Wall(h*35));
+			console.log("seinä lisätty");
 		} // lisää seinän (joka on 35px korkea)
 	}
+	console.log("eka este: " + obstacle[1]);
 }
 
 var randomPosition = function(height) {
