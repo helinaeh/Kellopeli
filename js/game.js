@@ -250,9 +250,10 @@ var count = 0; // +1 aina kun uusi seinämä tehdään
 var obsProp = 0.1; // todnäk jolla seinään tulee "avattava" este
 var yArray = [];
 var a = 0;
+var thisTime = new Date().getTime();
 
 var updateObstacleWall = function() {
-	
+	thisTime = new Date().getTime();
 }
 
 var createObstacleWall = function(car, hom, gar, wor, watch) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
