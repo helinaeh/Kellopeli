@@ -61,8 +61,8 @@ var createObstacles = function() {
 	homeImg = getImage("images/homesprite.png");
 	workImg = getImage("images/worksprite.png");
 	wallImg = getImage("images/carsprite.png");
-	randomiseObstacles();
-	//createObstacleWall();
+	//randomiseObstacles();
+	createObstacleWall();
 };
 
 var randomiseObstacles = function() {
@@ -156,6 +156,7 @@ var render = function() {
 	ctx.drawImage(bgImage, 0, 0, 900, 500, bgX2, 0, canvas.width, canvas.height);
 	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
 	for (var i = 0; i < obstacle.length; i++) {
+		//console.log(i);
 		if (obstacle[i].type == 1) {
 			ctx.drawImage(carImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 		}
@@ -168,7 +169,7 @@ var render = function() {
 		else if (obstacle[i].type == 4) {
 			ctx.drawImage(workImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 		}
-		else if (obstacle[i].type.equals("wal")) {
+		else if (obstacle[i].type == "wal") {
 			ctx.drawImage(wallImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 		}
 	}
@@ -178,6 +179,8 @@ var update = function() {
 	updateBg();
 	player.move(canvas);
 	for (var i = 0; i < obstacle.length; i++) {
+		console.log("este nro " + i, obstacle[i]);
+
 		obstacle[i].move(canvas);
 	}
 	collisionDetection();
@@ -251,14 +254,23 @@ var obsProp = 0.1; // todnäk jolla seinään tulee "avattava" este
 var yArray = [];
 var a = 0;
 var thisTime = new Date().getTime();
+var lastTime = thisTime;
+var span = 0;
 
 var updateObstacleWall = function() {
+	//console.log("menee updateObstacleWalliin");
 	thisTime = new Date().getTime();
+	span = thisTime - lastTime;
+	if (span > 4000) {
+		createObstacleWall();
+		//console.log("menee iffiin");
+		lastTime = thisTime;
+	}
 }
 
 var createObstacleWall = function(car, hom, gar, wor, watch) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
 
-	console.log("tulee algoritmiin");
+	//console.log("tulee algoritmiin");
 
 	a = 0; // +1 kun lisätään seinämään este
 	/* 
@@ -287,14 +299,14 @@ var addHole = function() {
 		position = position + 1;
 		x = x + 1;
 	} while (x < holeSize - Math.round(Math.random() - 0.4) - (count % 25));
-	console.log("kolo lisätty");
+	//console.log("kolo lisätty");
 }
 
 var addObstacles = function(car, hom, gar, wor, watch) {
 
 	var position = 0;
 
-	for (var i = 0; i < count % 40; i++) { //lisätään työpaikka (ehkä)
+	for (var i = 0; i < (count % 40); i++) { //lisätään työpaikka (ehkä)
 		if(Math.random() <= obsProp * 0.4) {
 			position = randomPosition(4);
 			if (position != -1) {
@@ -305,18 +317,18 @@ var addObstacles = function(car, hom, gar, wor, watch) {
 		}
 	}
 
-	for (i = 0; i < count % 30; i++) { //lisätään koti (ehkä)
+	for (i = 0; i < (count % 30); i++) { //lisätään koti (ehkä)
 		if(Math.random() <= obsProp * 0.6) {
 			position = randomPosition(3);
 			if (position != -1) {
-				obstacle.push(Home(position, hom || watch));
+				obstacle.push(new Home(position, hom || watch));
 				yArray.push(position, position+1, position+2); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			}
 		}
 	}
 
-	for (i = 0; i < count % 20; i++) { //lisätään autotalli (ehkä)
+	for (i = 0; i < (count % 20); i++) { //lisätään autotalli (ehkä)
 		if(Math.random() <= obsProp * 0.8) {
 			position = randomPosition(2);
 			if (position != -1) {
@@ -327,14 +339,14 @@ var addObstacles = function(car, hom, gar, wor, watch) {
 		}
 	}
 
-	for (i = 0; i < count % 10; i++) { //lisätään auto (ehkä)
+	for (i = 0; i < (count % 10); i++) { //lisätään auto (ehkä)
 		if(Math.random() <= obsProp) {
 			position = randomPosition(1);
 			if (position != -1) {
 				obstacle.push(new Car(position, car || watch));
 				yArray.push(position); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
-				console.log("auto lisätty");
+				//console.log("auto lisätty");
 			}
 		}
 	}
