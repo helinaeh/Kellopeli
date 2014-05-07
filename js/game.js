@@ -155,7 +155,7 @@ var update = function() {
 	updateBg();
 	player.move(canvas);
 	for (var i = 0; i < obstacle.length; i++) {
-		console.log("este nro " + i, obstacle[i]);
+		//console.log("este nro " + i, obstacle[i]);
 
 		obstacle[i].move(canvas);
 	}
@@ -264,7 +264,7 @@ var addHole = function() {
 		yArray.push(position);
 		position = position + 1;
 		x = x + 1;
-	} while (x < holeSize - Math.round(Math.random() - 0.4) - (count % 25));
+	} while (x < holeSize - Math.round(Math.random() - 0.4) - Math.floor(count / 25));
 	//console.log("kolo lisätty");
 }
 
@@ -272,7 +272,7 @@ var addObstacles = function(car, hom, gar, wor, watch) {
 
 	var position = 0;
 
-	for (var i = 0; i < (count % 40); i++) { //lisätään työpaikka (ehkä)
+	for (var i = 0; i < Math.floor(count / 40); i++) { //lisätään työpaikka (ehkä)
 		if(Math.random() <= obsProp * 0.4) {
 			position = randomPosition(4);
 			if (position != -1) {
@@ -283,7 +283,7 @@ var addObstacles = function(car, hom, gar, wor, watch) {
 		}
 	}
 
-	for (i = 0; i < (count % 30); i++) { //lisätään koti (ehkä)
+	for (i = 0; i < Math.floor(count / 30); i++) { //lisätään koti (ehkä)
 		if(Math.random() <= obsProp * 0.6) {
 			position = randomPosition(3);
 			if (position != -1) {
@@ -294,7 +294,7 @@ var addObstacles = function(car, hom, gar, wor, watch) {
 		}
 	}
 
-	for (i = 0; i < (count % 20); i++) { //lisätään autotalli (ehkä)
+	for (i = 0; i < Math.floor(count / 20); i++) { //lisätään autotalli (ehkä)
 		if(Math.random() <= obsProp * 0.8) {
 			position = randomPosition(2);
 			if (position != -1) {
@@ -305,7 +305,7 @@ var addObstacles = function(car, hom, gar, wor, watch) {
 		}
 	}
 
-	for (i = 0; i < (count % 10); i++) { //lisätään auto (ehkä)
+	for (i = 0; i < Math.floor(count / 10); i++) { //lisätään auto (ehkä)
 		if(Math.random() <= obsProp) {
 			position = randomPosition(1);
 			if (position != -1) {
@@ -322,10 +322,10 @@ var addWalls = function() {
 	for (var h = 0; h < 15; h++) { // käy läpi indeksit
 		if (yArray.indexOf(h) == -1) {
 			obstacle.push(new Wall(h*35));
-			console.log("seinä lisätty");
+			//console.log("seinä lisätty");
 		} // lisää seinän (joka on 35px korkea)
 	}
-	console.log("eka este: " + obstacle[1]);
+	//console.log("eka este: " + obstacle[1]);
 }
 
 var randomPosition = function(height) {
