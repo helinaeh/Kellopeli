@@ -52,7 +52,7 @@ var createObstacles = function() {
 	garImg = getImage("images/garagesprite.png");
 	homeImg = getImage("images/homesprite.png");
 	workImg = getImage("images/worksprite.png");
-	wallImg = getImage("images/carsprite.png");
+	wallImg = getImage("images/wallsprite.png");
 	randomiseObstacles();
 	//createObstacleWall();
 };
