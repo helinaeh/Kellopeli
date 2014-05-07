@@ -216,7 +216,7 @@ var updateSprite = function() {
 // ALGORITMI ---------------------------------------------------
 
 var count = 0; // +1 aina kun uusi seinämä tehdään
-var obsProp = 0.1; // todnäk jolla seinään tulee "avattava" este
+var obsProp = 0.3; // todnäk jolla seinään tulee "avattava" este
 var yArray = [];
 var a = 0;
 var thisTime = new Date().getTime();
@@ -272,44 +272,45 @@ var addObstacles = function(car, hom, gar, wor, watch) {
 
 	var position = 0;
 
-	for (var i = 0; i < Math.floor(count / 40); i++) { //lisätään työpaikka (ehkä)
-		if(Math.random() <= obsProp * 0.4) {
+	for (var i = 0; i < Math.floor(count / 20); i++) { //lisätään työpaikka (ehkä)
+		if(Math.random() <= obsProp) {
 			position = randomPosition(4);
 			if (position != -1) {
-				obstacle.push(new Work(position, wor || watch));
+				obstacle.push(new Work(position * 35, wor || watch));
 				yArray.push(position, position+1, position+2, position+3); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			}
 		}
 	}
 
-	for (i = 0; i < Math.floor(count / 30); i++) { //lisätään koti (ehkä)
-		if(Math.random() <= obsProp * 0.6) {
+	for (i = 0; i < Math.floor(count / 15); i++) { //lisätään koti (ehkä)
+		if(Math.random() <= obsProp) {
 			position = randomPosition(3);
 			if (position != -1) {
-				obstacle.push(new Home(position, hom || watch));
+				obstacle.push(new Home(position * 35, hom || watch));
 				yArray.push(position, position+1, position+2); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			}
 		}
 	}
 
-	for (i = 0; i < Math.floor(count / 20); i++) { //lisätään autotalli (ehkä)
-		if(Math.random() <= obsProp * 0.8) {
+	for (i = 0; i < Math.floor(count / 10); i++) { //lisätään autotalli (ehkä)
+		if(Math.random() <= obsProp) {
 			position = randomPosition(2);
 			if (position != -1) {
-				obstacle.push(new Garage(position, gar || watch));
+				obstacle.push(new Garage(position * 35, gar || watch));
 				yArray.push(position, position+1); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			}
 		}
 	}
 
-	for (i = 0; i < Math.floor(count / 10); i++) { //lisätään auto (ehkä)
+	for (i = 0; i < Math.floor(count / 5); i++) { //lisätään auto (ehkä)
 		if(Math.random() <= obsProp) {
 			position = randomPosition(1);
 			if (position != -1) {
-				obstacle.push(new Car(position, car || watch));
+				//console.log(position);
+				obstacle.push(new Car(position * 35, car || watch));
 				yArray.push(position); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 				//console.log("auto lisätty");
@@ -349,7 +350,7 @@ var randomPosition = function(height) {
 var isEmpty = function(result, height) {
 	var res = false;
 	for (var i = result; i < result + height; i++) {
-		if (yArray.indexOf(i) != -1) res = true;
+		if (yArray.indexOf(i) == -1) res = true;
 	}
 	return res;
 }
