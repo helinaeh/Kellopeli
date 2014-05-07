@@ -1,4 +1,4 @@
-var canvas, ctx, bgImage, player, playerImg, obstacle, carImg, delta;
+var canvas, ctx, bgImage, player, playerImg, obstacle, carImg, garImg, homeImg, workImg, delta;
 var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900;
 var spriteSpeed = 500, sumOfDelta = 0, lastCalledTime = new Date().getTime();
 
@@ -24,33 +24,53 @@ var setCanvas = function() {
 
 //kaikkien getImagejen siirtäminen playerilta ja obstaclelta game-luokkaan!!!
 var setBackground = function() {
+	bgImage = getImage("images/background.png");
+	/*
 	var bgReady = false;
 	bgImage = new Image();
 	bgImage.onload = function () {
 		bgReady = true;
 	};
 	bgImage.src = "images/background.png";
+	*/
 }
+
+var getImage = function(path) {
+	var img = null;
+	var ready = false;
+	img = new Image();
+	img.onload = function () {
+		ready = true;
+	};
+	img.src = path;
+	return img;
+};
 
 var createPlayer = function() {
 	player = new Player(canvas.width/2-playerSpriteX/2, canvas.height/2-playerSpriteY/2);
-	playerImg = player.getImage(player.spriteSrc);
+	//playerImg = player.getImage(player.spriteSrc);
+	playerImg = getImage("images/playersprite.png");
 	player.createKeys();
 	//player.addKey("key1");
 };
 
 var createObstacles = function() {
 	obstacle = new Array();
-	//randomiseObstacles();
-	createObstacleWall();
+	carImg = getImage("images/carsprite.png");
+	garImg = getImage("images/garagesprite.png");
+	homeImg = getImage("images/homesprite.png");
+	workImg = getImage("images/worksprite.png");
+	wallImg = getImage("images/carsprite.png");
+	randomiseObstacles();
+	//createObstacleWall();
 };
 
 var randomiseObstacles = function() {
-	var obsImages = new Array();
-	obsImages.push(false, false, false, false); //PAREMPI VAIHTOEHTO: luodaan kaikkien esteiden kuvat heti alussa!
+	//var obsImages = new Array();
+	//obsImages.push(false, false, false, false); //PAREMPI VAIHTOEHTO: luodaan kaikkien esteiden kuvat heti alussa!
 	obstacle[0] = new Car(200, false);
 	//obstacle[1] = new Car(300, false);
-	carImg = obstacle[0].getImage();
+	//carImg = obstacle[0].getImage();
 
 	/*
 	
@@ -138,6 +158,18 @@ var render = function() {
 	for (var i = 0; i < obstacle.length; i++) {
 		if (obstacle[i].type == 1) {
 			ctx.drawImage(carImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+		}
+		else if (obstacle[i].type == 2) {
+			ctx.drawImage(garImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+		}
+		else if (obstacle[i].type == 3) {
+			ctx.drawImage(homeImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+		}
+		else if (obstacle[i].type == 4) {
+			ctx.drawImage(workImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+		}
+		else if (obstacle[i].type.equals("wal")) {
+			ctx.drawImage(wallImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 		}
 	}
 };
