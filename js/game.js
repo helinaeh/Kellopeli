@@ -22,17 +22,8 @@ var setCanvas = function() {
 	setBackground();
 };
 
-//kaikkien getImagejen siirtäminen playerilta ja obstaclelta game-luokkaan!!!
 var setBackground = function() {
 	bgImage = getImage("images/background.png");
-	/*
-	var bgReady = false;
-	bgImage = new Image();
-	bgImage.onload = function () {
-		bgReady = true;
-	};
-	bgImage.src = "images/background.png";
-	*/
 }
 
 var getImage = function(path) {
@@ -48,7 +39,7 @@ var getImage = function(path) {
 
 var createPlayer = function() {
 	player = new Player(canvas.width/2-playerSpriteX/2, canvas.height/2-playerSpriteY/2);
-	//playerImg = player.getImage(player.spriteSrc);
+	//playerImg = player.getImage(player.spriteSrc); //getImage käyttäen playerin omaa metodia
 	playerImg = getImage("images/playersprite.png");
 	player.createKeys();
 	//player.addKey("key1");
@@ -66,22 +57,7 @@ var createObstacles = function() {
 };
 
 var randomiseObstacles = function() {
-	//var obsImages = new Array();
-	//obsImages.push(false, false, false, false); //PAREMPI VAIHTOEHTO: luodaan kaikkien esteiden kuvat heti alussa!
 	obstacle[0] = new Car(200, false);
-	//obstacle[1] = new Car(300, false);
-	//carImg = obstacle[0].getImage();
-
-	/*
-	
-	while () { //niin kauan, kun peli jatkuu
-		//luo uusi random este
-		//tutkitaan, mikä esteen avainluku on (eli mikä este kyseessä)
-		//jos obsImages[avainluku-1] == true, niin ei lisätä kuvaa
-		//jos false, niin getImage();
-	}
-
-	*/
 };
 
 var addEventListeners = function() {
@@ -223,16 +199,6 @@ var collisionDetection = function() {
 		}
 	}
 };
-
-/*
-if (this.x < canvas.width - this.width) {
-		this.x += this.speed;
-		this.frameY = 4;
-	}
-	else {
-		this.x = canvas.width - this.width;
-	}
-	*/
 
 
 var updateSprite = function() {
