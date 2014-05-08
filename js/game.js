@@ -177,25 +177,27 @@ var updateBg = function() {
 
 var collisionDetection = function() {
 	for (var i = 0; i <  obstacle.length; i++) {
-		if (obstacle[i].x < player.x + player.width  && obstacle[i].x + obstacle[i].width  > player.x &&
-				obstacle[i].y < player.y + player.height && obstacle[i].y + obstacle[i].height > player.y) {
-			
-			//jos pelaaja liikkuu oikealle tai ei liiku lainkaan
-			if (player.direction == "right" || player.isMoving == false) {
-				player.x = obstacle[i].x - player.width;
-			}
-			//jos pelaaja liikkuu vasemmalle
-			else if (player.direction == "left") {
-				player.x = obstacle[i].x + obstacle[i].width;
-			}
-			else if (player.direction == "up") {
-				player.y = obstacle[i].y + obstacle[i].height;
-			}
-			else if (player.direction == "down") {
-				player.y = obstacle[i].y - player.height;
-			}
+		if (obstacle[i].greyed == false) {		// jotta "harmaana" olevista esteistä pääsee läpi, testattu ja toimii
+			if (obstacle[i].x < player.x + player.width  && obstacle[i].x + obstacle[i].width  > player.x &&
+					obstacle[i].y < player.y + player.height && obstacle[i].y + obstacle[i].height > player.y) {
+				
+				//jos pelaaja liikkuu oikealle tai ei liiku lainkaan
+				if (player.direction == "right" || player.isMoving == false) {
+					player.x = obstacle[i].x - player.width;
+				}
+				//jos pelaaja liikkuu vasemmalle
+				else if (player.direction == "left") {
+					player.x = obstacle[i].x + obstacle[i].width;
+				}
+				else if (player.direction == "up") {
+					player.y = obstacle[i].y + obstacle[i].height;
+				}
+				else if (player.direction == "down") {
+					player.y = obstacle[i].y - player.height;
+				}
 
-			console.log("Törmäys!");
+				console.log("Törmäys!");
+			}
 		}
 	}
 };
@@ -228,13 +230,14 @@ var updateObstacleWall = function() {
 	thisTime = new Date().getTime();
 	span = thisTime - lastTime;
 	if (span > 4000) {
-		createObstacleWall();
+		createObstacleWall(player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
+		//console.log(player.keys.key1, player.keys.key2);
 		//console.log("menee iffiin");
 		lastTime = thisTime;
 	}
 }
 
-var createObstacleWall = function(car, hom, gar, wor, watch) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
+var createObstacleWall = function(car, hom, gar, wor) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
 
 	//console.log("tulee algoritmiin");
 
@@ -248,7 +251,7 @@ var createObstacleWall = function(car, hom, gar, wor, watch) { // Parametrit ova
 
 	addHole();
 
-	addObstacles(car, hom, gar, wor, watch);
+	addObstacles(car, hom, gar, wor);
 
 	addWalls();
 
@@ -268,7 +271,7 @@ var addHole = function() {
 	//console.log("kolo lisätty");
 }
 
-var addObstacles = function(car, hom, gar, wor, watch) {
+var addObstacles = function(car, hom, gar, wor) {
 
 	var position = 0;
 
@@ -276,7 +279,7 @@ var addObstacles = function(car, hom, gar, wor, watch) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(4);
 			if (position != -1) {
-				obstacle.push(new Work(position * 35, wor || watch));
+				obstacle.push(new Work(position * 35, wor));
 				yArray.push(position, position+1, position+2, position+3); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			}
@@ -287,7 +290,7 @@ var addObstacles = function(car, hom, gar, wor, watch) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(3);
 			if (position != -1) {
-				obstacle.push(new Home(position * 35, hom || watch));
+				obstacle.push(new Home(position * 35, hom));
 				yArray.push(position, position+1, position+2); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			}
@@ -298,7 +301,7 @@ var addObstacles = function(car, hom, gar, wor, watch) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(2);
 			if (position != -1) {
-				obstacle.push(new Garage(position * 35, gar || watch));
+				obstacle.push(new Garage(position * 35, gar));
 				yArray.push(position, position+1); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 			}
@@ -310,7 +313,7 @@ var addObstacles = function(car, hom, gar, wor, watch) {
 			position = randomPosition(1);
 			if (position != -1) {
 				//console.log(position);
-				obstacle.push(new Car(position * 35, car || watch));
+				obstacle.push(new Car(position * 35, car));
 				yArray.push(position); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 				//console.log("auto lisätty");
