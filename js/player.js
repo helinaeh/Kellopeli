@@ -1,7 +1,7 @@
 function Player(x, y) {
 	this.x = x;
 	this.y = y;
-	this.speed = 2;
+	this.speed = 4;
 	this.spriteSrc = "images/playersprite.png"; //tee uusi hahmo
 	this.width = 22; //määrittele spritesheetin perusteella!!!
 	this.height = 28;

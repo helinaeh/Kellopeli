@@ -56,9 +56,11 @@ var createObstacles = function() {
 	createObstacleWall();
 };
 
+/*
 var randomiseObstacles = function() {
 	obstacle[0] = new Car(200, false);
 };
+*/
 
 var addEventListeners = function() {
 	directions = new Array();
@@ -128,8 +130,8 @@ var clear = function() {
 };
 
 var render = function() {
-	ctx.drawImage(bgImage, 0, 0, 900, 500, bgX1, 0, canvas.width, canvas.height);
-	ctx.drawImage(bgImage, 0, 0, 900, 500, bgX2, 0, canvas.width, canvas.height);
+	ctx.drawImage(bgImage, 0, 0, 900, 525, bgX1, 0, canvas.width, canvas.height);
+	ctx.drawImage(bgImage, 0, 0, 900, 525, bgX2, 0, canvas.width, canvas.height);
 	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
 	for (var i = 0; i < obstacle.length; i++) {
 		//console.log(i);
@@ -175,24 +177,35 @@ var updateBg = function() {
 	}
 };
 
-var collisionDetection = function() {
+var collisionDetection = function() { //muokkaa törmäystestit toimiviksi!!!!!
 	for (var i = 0; i <  obstacle.length; i++) {
 		if (obstacle[i].x < player.x + player.width  && obstacle[i].x + obstacle[i].width  > player.x &&
 				obstacle[i].y < player.y + player.height && obstacle[i].y + obstacle[i].height > player.y) {
 			
-			//jos pelaaja liikkuu oikealle tai ei liiku lainkaan
-			if (player.direction == "right" || player.isMoving == false) {
+			if (player.isMoving == false) { //jos pelaaja ei liiku
 				player.x = obstacle[i].x - player.width;
 			}
-			//jos pelaaja liikkuu vasemmalle
-			else if (player.direction == "left") {
+			else if (player.direction == "right" && obstacle[i].x > player.x) { //jos pelaaja yrittää mennä oikealle JA este on oikealla
+				player.x = obstacle[i].x - player.width;
+			}
+			else if (player.direction == "left" && obstacle[i].x < player.x) { //jos pelaaja yrittää mennä vasemmalle JA este on vasemmalla
 				player.x = obstacle[i].x + obstacle[i].width;
 			}
-			else if (player.direction == "up") {
+			else if (player.direction == "up" && obstacle[i].y < player.y) { //jos pelaaja yrittää mennä ylös JA este on yläpuolella
 				player.y = obstacle[i].y + obstacle[i].height;
 			}
-			else if (player.direction == "down") {
+			else if (player.direction == "down" && obstacle[i].y > player.y) { //jos pelaaja yrittää mennä alas JA este on alapuolella
 				player.y = obstacle[i].y - player.height;
+			}
+			else if (player.direction == "up" && obstacle[i].x > player.x) { //jos pelaaja yrittää mennä ylös JA este on oikealla
+				player.x = obstacle[i].x - player.width;
+				//player.y = obstacle[i].y + obstacle[i].height;
+				//player.moveUp();
+			}
+			else if (player.direction == "down" && obstacle[i].x > player.x) { //jos pelaaja yrittää mennä alas JA este on oikealla
+				player.x = obstacle[i].x - player.width;
+				//player.y = obstacle[i].y - player.height;
+				//player.moveDown();
 			}
 
 			console.log("Törmäys!");
@@ -213,7 +226,9 @@ var updateSprite = function() {
 
 
 
-// ALGORITMI ---------------------------------------------------
+/*************/
+/* ALGORITMI */
+/*************/
 
 var count = 0; // +1 aina kun uusi seinämä tehdään
 var obsProp = 0.3; // todnäk jolla seinään tulee "avattava" este
