@@ -262,8 +262,10 @@ var updateObstacleWall = function() {
 
 var updateKeys = function() {
 	if (span > 2000 && keyAdded == false) {
-		makeKey;
+		if (!Player.hasKeys()) makeKey;
+		
 		keyAdded = true;
+		
 	} else if (span < 2000 && keyAdded == true) keyAdded = false;
 }
 
