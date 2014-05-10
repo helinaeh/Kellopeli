@@ -164,6 +164,7 @@ var update = function() {
 	collisionDetection();
 	updateSprite();
 	updateObstacleWall();
+	updateKeys();
 };
 
 var updateBg = function() {
@@ -236,6 +237,7 @@ var a = 0;
 var thisTime = new Date().getTime();
 var lastTime = thisTime;
 var span = 0;
+var keysAdded = false;
 
 var updateObstacleWall = function() {
 	//console.log("menee updateObstacleWalliin");
@@ -248,7 +250,15 @@ var updateObstacleWall = function() {
 	}
 }
 
-var createObstacleWall = function(car, hom, gar, wor) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
+var updateKeys = function() {
+	thisTimeKeys = new Date().getTime();
+	if (span > 2000 && keysAdded == false) {
+		addKeys;
+		keysAdded = true;
+	} else if (span < 2000 && keysAdded == true) keysAdded = false;
+}
+
+var createObstacleWall = function(position, car, hom, gar, wor) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
 
 	//console.log("tulee algoritmiin");
 
@@ -361,9 +371,9 @@ var randomPosition = function(height) {
 	return result;
 }
 
-var isEmpty = function(result, height) {
+var isEmpty = function(position, height) {
 	var res = false;
-	for (var i = result; i < result + height; i++) {
+	for (var i = position; i < position + height; i++) {
 		if (yArray.indexOf(i) == -1) res = true;
 	}
 	return res;
