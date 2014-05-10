@@ -233,11 +233,12 @@ var updateSprite = function() {
 var count = 0; // +1 aina kun uusi seinämä tehdään
 var obsProp = 0.3; // todnäk jolla seinään tulee "avattava" este
 var yArray = [];
+var keyArray = [];
 var a = 0;
 var thisTime = new Date().getTime();
 var lastTime = thisTime;
 var span = 0;
-var keysAdded = false;
+var keyAdded = false;
 
 var updateObstacleWall = function() {
 	//console.log("menee updateObstacleWalliin");
@@ -251,16 +252,36 @@ var updateObstacleWall = function() {
 }
 
 var updateKeys = function() {
-	thisTimeKeys = new Date().getTime();
-	if (span > 2000 && keysAdded == false) {
-		addKeys;
-		keysAdded = true;
-	} else if (span < 2000 && keysAdded == true) keysAdded = false;
+	if (span > 2000 && keyAdded == false) {
+		makeKey;
+		keyAdded = true;
+	} else if (span < 2000 && keyAdded == true) keyAdded = false;
+}
+
+var makeKey = function() {
+	if (Math.random() < 0.1 && count > 10) {
+		keyArray.push(new Key(key1, randomKeyPosition()));
+		return;
+	}
+
+	if (Math.random() < 0.09 && count > 15) {
+		keyArray.push(new Key(key2, randomKeyPosition()));
+		return;
+	}
+
+	if (Math.random() < 0.08 && count > 20) {
+		keyArray.push(new Key(key3, randomKeyPosition()));
+		return;
+	}
+
+	if (Math.random() < 0.07 && count > 25) {
+		keyArray.push(new Key(key4, randomKeyPosition()));
+		return;
+	}
 }
 
 var createObstacleWall = function(position, car, hom, gar, wor) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
 
-	//console.log("tulee algoritmiin");
 
 	a = 0; // +1 kun lisätään seinämään este
 	/* 
@@ -283,7 +304,7 @@ var addHole = function() {
 	var position = Math.round(Math.random() * 12);
 	var holeSize = 3;
 	var x = 0;
-	if (count > 80 && Math.random() < 0.03) return;
+	if (count > 80 && Math.random() < 0.01) return;
 	do {
 		yArray.push(position);
 		position = position + 1;
@@ -303,6 +324,7 @@ var addObstacles = function(car, hom, gar, wor) {
 				obstacle.push(new Work(position * 35, wor));
 				yArray.push(position, position+1, position+2, position+3); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
+				break;
 			}
 		}
 	}
@@ -314,6 +336,7 @@ var addObstacles = function(car, hom, gar, wor) {
 				obstacle.push(new Home(position * 35, hom));
 				yArray.push(position, position+1, position+2); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
+				break;
 			}
 		}
 	}
@@ -325,6 +348,7 @@ var addObstacles = function(car, hom, gar, wor) {
 				obstacle.push(new Garage(position * 35, gar));
 				yArray.push(position, position+1); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
+				break;
 			}
 		}
 	}
@@ -337,7 +361,7 @@ var addObstacles = function(car, hom, gar, wor) {
 				obstacle.push(new Car(position * 35, car));
 				yArray.push(position); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
-				//console.log("auto lisätty");
+				break;
 			}
 		}
 	}
@@ -347,22 +371,16 @@ var addWalls = function() {
 	for (var h = 0; h < 15; h++) { // käy läpi indeksit
 		if (yArray.indexOf(h) == -1) {
 			obstacle.push(new Wall(h*35));
-			//console.log("seinä lisätty");
 		} // lisää seinän (joka on 35px korkea)
 	}
-	//console.log("eka este: " + obstacle[1]);
 }
 
 var randomPosition = function(height) {
 	var result = -1;
-	/*
-	ensimmäinen versio, tämä olisi jatkanut paikan arpomista loputtomiin jos tarpeeksi isoa paikkaa ei ole
-	do {
-		result = Math.round(Math.random() * 10);
-	} while (!isEmpty(result, height));
-	*/
+
 	for (var i = 0; i < 10; i++) {
 		result = Math.round(Math.random() * 15);
+		
 		if (isEmpty(result, height)) {
 			break;
 		} else result = -1;
@@ -372,9 +390,21 @@ var randomPosition = function(height) {
 }
 
 var isEmpty = function(position, height) {
-	var res = false;
+	var res = true;
+
 	for (var i = position; i < position + height; i++) {
-		if (yArray.indexOf(i) == -1) res = true;
+		if (yArray.indexOf(i) != -1 && i > 15) res = false;
 	}
+
 	return res;
 }
+
+var randomKeyPosition = function() {
+	var pos = Math.round(Math.random() * 10);
+
+	if (pos > 5) pos = pos + 5;
+
+	return pos;
+}
+
+
