@@ -53,7 +53,10 @@ var createObstacles = function() {
 	workImg = getImage("images/worksprite.png");
 	wallImg = getImage("images/wallsprite.png");
 	//randomiseObstacles();
-	createObstacleWall();
+	createObstacleWall(900, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
+	createObstacleWall(650, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
+	createObstacleWall(400, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
+	createObstacleWall(150, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
 };
 
 /*
@@ -246,7 +249,7 @@ var updateObstacleWall = function() {
 	span = thisTime - lastTime;
 
 	if (span > 4000) {
-		createObstacleWall(800, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
+		createObstacleWall(900, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
 		lastTime = thisTime;
 	}
 }
@@ -394,7 +397,7 @@ var isEmpty = function(position, height) {
 	var res = true;
 
 	for (var i = position; i < position + height; i++) {
-		if (yArray.indexOf(i) != -1 || i > 15) res = false;
+		if (yArray.indexOf(i) != -1 || i > 14) res = false;
 	}
 
 	return res;
