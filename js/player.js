@@ -43,10 +43,10 @@ Player.prototype.addKey = function(id) {
 		points = points + 1000;
 	}
 	else if (id == "watch") {
-		Player.addKey("key1");
-		Player.addKey("key2");
-		Player.addKey("key3");
-		Player.addKey("key4");
+		player.addKey("key1");
+		player.addKey("key2");
+		player.addKey("key3");
+		player.addKey("key4");
 		points = points + 6000; // oikeasti antaa 10000 pistettä yhteensä, koska myös
 								// yksittäisten avainten lisäämisestä tulee pisteitä
 	}
