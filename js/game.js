@@ -2,6 +2,8 @@ var canvas, ctx, bgImage, player, playerImg, obstacle, carImg, garImg, homeImg, 
 var carKey, garageKey, homeKey, workKey, watchImg, logo;
 var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900, points = 0, paused = true, speed = 2, speedTime = new Date().getTime();
 var spriteSpeed = 500, pointSpeed = 100, sumOfDelta = 0, sumOfPoints = 0, lastCalledTime = new Date().getTime();
+var intro;
+var introSrc = "audio/intro.mp3";
 
 window.onload = function() {
 	format();
@@ -25,11 +27,16 @@ var setCanvas = function() {
 	canvas.width = 900;
 	canvas.height = 625;
 	setBackground();
+	setSounds();
 };
 
 var setBackground = function() {
 	bgImage = getImage("images/background.png");
 }
+
+var setSounds = function() {
+	intro = document.getElementById("intro");
+};
 
 var getImage = function(path) {
 	var img = null;
@@ -173,6 +180,7 @@ var addEventListeners = function() {
 		if (start.click(e)) {
 			//peli alkaa
 			paused = false;
+			soundEfx.play();
 		}
 	}, false);
 	
