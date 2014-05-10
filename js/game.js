@@ -99,20 +99,20 @@ var addEventListeners = function() {
 	//use of arrow keys
 	window.addEventListener("keydown", function(e) {
 		//left arrow
-		if (e.keyCode == 37) {
+		/*if (e.keyCode == 37) {
 			player.direction = directions[0];
 			player.isMoving = true;
-		}
+		}*/
 		//up arrow
 		if (e.keyCode == 38) {
 			player.direction = directions[1];
 			player.isMoving = true;
 		}
-		//right arrow
+		/*//right arrow
 		if (e.keyCode == 39) {
 			player.direction = directions[2];
 			player.isMoving = true;
-		}
+		}*/
 		//down arrow
 		if (e.keyCode == 40) {
 			player.direction = directions[3];
@@ -132,7 +132,7 @@ var animate = function() {
 		clear();
 		render();
 		update();
-		//isGameOver();
+		isGameOver();
 		requestId = window.requestAnimationFrame(animate);
 	}
 	
@@ -159,9 +159,6 @@ var render = function() {
 	//background
 	ctx.drawImage(bgImage, 0, 0, 900, 625, bgX1, 0, canvas.width, canvas.height);
 	ctx.drawImage(bgImage, 0, 0, 900, 625, bgX2, 0, canvas.width, canvas.height);
-	
-	//player
-	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
 	
 	//obstacles
 	for (var i = 0; i < obstacle.length; i++) {
@@ -200,6 +197,9 @@ var render = function() {
 			ctx.drawImage(watchImg, 0, 0, 35, 35, keyArray[i].x, keyArray[i].y, 35, 35);
 		}
 	}
+
+	//player
+	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
 
 	//keys the player has collected (menu)
 	if (player.keys.key1 == true) {
@@ -306,6 +306,7 @@ var collectKey = function() {
 var updateSprite = function() {
 	if (sumOfDelta >= spriteSpeed) {
 		player.frameX++;
+		player.moveRight();
 
 		if (player.frameX >= 2) {
 			player.frameX = 0;
@@ -322,7 +323,7 @@ var updatePoints = function() {
 };
 
 var isGameOver = function() {
-	if (true) { //jos pelaaja on pelilaudan ulkopuolella (vasemmalla)
+	if (player.x < 0 - player.width) { //jos pelaaja on pelilaudan ulkopuolella (vasemmalla)
 		paused = true;
 	}
 };

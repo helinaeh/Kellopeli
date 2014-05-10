@@ -2,6 +2,7 @@ function Player(x, y) {
 	this.x = x;
 	this.y = y;
 	this.speed = 4;
+	this.walkingSpeed = 1;
 	this.spriteSrc = "images/playersprite.png"; //tee uusi hahmo
 	this.width = 22; //määrittele spritesheetin perusteella!!!
 	this.height = 28;
@@ -97,27 +98,26 @@ Player.prototype.hasKeys = function() { // kertoo onko pelaajalla ollenkaan avai
 Player.prototype.move = function(canvas) {
 	this.canvas = canvas;
 	if (this.isMoving === true) {
-		if (this.direction === "left") {
+		/*if (this.direction === "left") {
 			this.moveLeft();
-		}
+		}*/
 		if (this.direction === "up") {
 			this.moveUp();
 		}
-		if (this.direction === "right") {
+		/*if (this.direction === "right") {
 			this.moveRight();
-		}
+		}*/
 		if (this.direction === "down") {
 			this.moveDown();
 		}
 	}
 	else {
 		this.frameY = 0;
-		//console.log("ei liikutakaan, isMoving = false");
 	}
 };
 
 
-Player.prototype.moveLeft = function() {
+/*Player.prototype.moveLeft = function() {
 	if (this.x > 0) {
 		this.x -= this.speed;
 		this.frameY = 3;
@@ -125,7 +125,7 @@ Player.prototype.moveLeft = function() {
 	else {
 		this.x = 0;
 	}
-};
+};*/
 
 Player.prototype.moveUp = function() {
 	if (this.y > 100) {
@@ -137,13 +137,24 @@ Player.prototype.moveUp = function() {
 	}
 };
 
-Player.prototype.moveRight = function() {
+//original moveRight (when arrow keys are used)
+/*Player.prototype.moveRight = function() {
 	if (this.x < canvas.width - this.width) {
 		this.x += this.speed;
 		this.frameY = 4;
 	}
 	else {
 		this.x = canvas.width - this.width;
+	}
+};*/
+
+Player.prototype.moveRight = function() {
+	if (this.x < canvas.width - this.width - 200) {
+		this.x += this.speed;
+		this.frameY = 4;
+	}
+	else {
+		this.x = canvas.width - this.width - 200;
 	}
 };
 
