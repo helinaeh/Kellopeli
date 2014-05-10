@@ -1,7 +1,7 @@
-var canvas, ctx, bgImage, player, playerImg, obstacle, carImg, garImg, homeImg, workImg, delta, points;
+var canvas, ctx, bgImage, player, playerImg, obstacle, carImg, garImg, homeImg, workImg, delta;
 var carKey, garageKey, homeKey, workKey, watchImg;
-var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900;
-var spriteSpeed = 500, sumOfDelta = 0, lastCalledTime = new Date().getTime();
+var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900, points = 0, paused = false;
+var spriteSpeed = 500, pointSpeed = 100, sumOfDelta = 0, sumOfPoints = 0, lastCalledTime = new Date().getTime();
 
 window.onload = function() {
 	format();
@@ -127,11 +127,14 @@ var addEventListeners = function() {
 };
 
 var animate = function() {
-	timer();
-	clear();
-	render();
-	update();
-	requestId = window.requestAnimationFrame(animate);
+	if (!paused) {
+		timer();
+		clear();
+		render();
+		update();
+		requestId = window.requestAnimationFrame(animate);
+	}
+	
 	/*
 	window.setTimeout(function() {
 		requestId = window.requestAnimationFrame(animate);	
@@ -143,6 +146,7 @@ var timer = function() {
 	delta = new Date().getTime() - lastCalledTime;
   	lastCalledTime = new Date().getTime();
   	sumOfDelta += delta;
+  	sumOfPoints += delta;
 };
 
 var clear = function() {
@@ -200,8 +204,11 @@ var render = function() {
 
 	//points text
 	ctx.fillStyle = "rgb(250, 250, 250)";
+	ctx.font = "18px Georgia";
+	ctx.fillText("SCORE", 27, 40);
+	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "30px Georgia";
-	ctx.fillText("TESTITEKSTI", 200, 65);
+	ctx.fillText(points, 27, 75);
 
 };
 
@@ -232,16 +239,9 @@ var updateBg = function() {
 	}
 };
 
-var updatePoints = function() {
-	points = points + 1;
-}
-
 var collisionDetection = function() {
 	for (var i = 0; i <  obstacle.length; i++) {
-		if (obstacle[i].greyed == false) {		// jotta "harmaana" olevista esteistä pääsee läpi, testattu ja toimii
-			
-
-					
+		if (obstacle[i].greyed == false) {		// jotta "harmaana" olevista esteistä pääsee läpi, testattu ja toimii		
 			if (obstacle[i].x < player.x + player.width  && obstacle[i].x + obstacle[i].width  > player.x &&
 					obstacle[i].y < player.y + player.height && obstacle[i].y + obstacle[i].height > player.y) {
 				
@@ -286,10 +286,18 @@ var collisionDetection = function() {
 var updateSprite = function() {
 	if (sumOfDelta >= spriteSpeed) {
 		player.frameX++;
+
 		if (player.frameX >= 2) {
 			player.frameX = 0;
 		}
 		sumOfDelta = 0;
+	}
+};
+
+var updatePoints = function() {
+	if (sumOfPoints >= pointSpeed) {
+		points++;
+		sumOfPoints = 0;
 	}
 };
 
