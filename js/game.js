@@ -4,7 +4,15 @@ var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900, points = 0, pa
 var spriteSpeed = 500, pointSpeed = 100, sumOfDelta = 0, sumOfPoints = 0, lastCalledTime = new Date().getTime();
 var intro;
 var introSrc = "audio/intro.mp3";
-
+/*
+myVid = document.getElementById("video1");
+var getCurTime = function() { 
+	alert(myVid.currentTime);
+} 
+var setCurTime = function() { 
+	myVid.currentTime=5;
+} 
+*/
 window.onload = function() {
 	format();
 	animate();
