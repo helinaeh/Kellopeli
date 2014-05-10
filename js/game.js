@@ -71,8 +71,8 @@ var randomiseObstacles = function() {
 var createKeys = function() {
 	keyArray = new Array();
 	carKey = getImage("images/carkey.png");
-	garageKey = getImage("images/garagekey.png");
-	homeKey = getImage("images/homekey.png");
+	garageKey = getImage("images/homekey.png");
+	homeKey = getImage("images/garagekey.png");
 	workKey = getImage("images/workkey.png");
 	watchImg = getImage("images/watch.png");
 	//randomiseKeys();
@@ -208,19 +208,44 @@ var render = function() {
 	//obstacles
 	for (var i = 0; i < obstacle.length; i++) {
 		if (obstacle[i].type == 1) {
-			ctx.drawImage(carImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			if (obstacle[i].greyed == false) {
+				ctx.drawImage(carImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			}
+			else {
+				ctx.drawImage(carImg, 35, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			}
 		}
 		else if (obstacle[i].type == 2) {
-			ctx.drawImage(garImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			if (obstacle[i].greyed == false) {
+				ctx.drawImage(garImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			}
+			else {
+				ctx.drawImage(garImg, 35, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			}
 		}
 		else if (obstacle[i].type == 3) {
-			ctx.drawImage(homeImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			if (obstacle[i].greyed == false) {
+				ctx.drawImage(homeImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			}
+			else {
+				ctx.drawImage(homeImg, 35, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			}
 		}
 		else if (obstacle[i].type == 4) {
-			ctx.drawImage(workImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			if (obstacle[i].greyed == false) {
+				ctx.drawImage(workImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			}
+			else {
+				ctx.drawImage(workImg, 35, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			}
 		}
 		else if (obstacle[i].type == "wal") {
-			ctx.drawImage(wallImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			if (obstacle[i].greyed == false) {
+				ctx.drawImage(wallImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			}
+			else {
+				ctx.drawImage(wallImg, 35, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+			}
 		}
 	}
 	
@@ -398,8 +423,8 @@ var updateSpeed = function() {
 var isGameOver = function() {
 	if (player.x < 0) { //jos pelaaja on pelilaudan ulkopuolella (vasemmalla)
 		paused = true;
-		drawMenu();
 		createButtons();
+		drawMenu();
 	}
 };
 
