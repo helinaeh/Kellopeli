@@ -255,6 +255,10 @@ var thisTime = new Date().getTime();
 var lastTime = thisTime;
 var span = 0;
 var keyAdded = false;
+var key1Time = new Date().getTime();
+var key2Time = new Date().getTime();
+var key3Time = new Date().getTime();
+var key4Time = new Date().getTime();
 
 var updateObstacleWall = function() {
 	thisTime = new Date().getTime();
@@ -269,10 +273,21 @@ var updateObstacleWall = function() {
 
 var updateKeys = function() {
 	if (span > 2000 && keyAdded == false) {
-		if (!Player.hasKeys()) makeKey;
+
+		if (player.keys.key1 == true && new Date().getTime() > key1Time + 32000) {
+			player.removeKey("key1");
+		} else if (player.keys.key2 == true && new Date().getTime() > key2Time + 32000) {
+			player.removeKey("key2");
+		} else if (player.keys.key3 == true && new Date().getTime() > key3Time + 32000) {
+			player.removeKey("key3");
+		} else if (player.keys.key4 == true && new Date().getTime() > key4Time + 32000) {
+			player.removeKey("key4");
+		}
+
+		if (!player.hasKeys()) makeKey;
 		
 		keyAdded = true;
-		
+
 	} else if (span < 2000 && keyAdded == true) keyAdded = false;
 }
 
