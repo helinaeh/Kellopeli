@@ -47,7 +47,8 @@ Player.prototype.addKey = function(id) {
 		Player.addKey("key2");
 		Player.addKey("key3");
 		Player.addKey("key4");
-		points = points + 10000;
+		points = points + 6000; // oikeasti antaa 10000 pistettä yhteensä, koska myös
+								// yksittäisten avainten lisäämisestä tulee pisteitä
 	}
 };
 

@@ -221,6 +221,7 @@ var updatePoints = function() {
 }
 
 var collisionDetection = function() { //muokkaa törmäystestit toimiviksi!!!!!
+	
 	for (var i = 0; i <  obstacle.length; i++) {
 		if (obstacle[i].greyed == false) {		// jotta "harmaana" olevista esteistä pääsee läpi, testattu ja toimii
 			
@@ -260,6 +261,10 @@ var collisionDetection = function() { //muokkaa törmäystestit toimiviksi!!!!!
 			}
 		}
 	}
+
+	for (i = 0; i < keyArray.length; i++) {
+		if (true) {};
+	};
 };
 
 
