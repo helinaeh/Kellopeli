@@ -1,6 +1,6 @@
 var canvas, ctx, bgImage, player, playerImg, obstacle, carImg, garImg, homeImg, workImg, delta;
-var carKey, garageKey, homeKey, workKey, watchImg;
-var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900, points = 0, paused = false;
+var carKey, garageKey, homeKey, workKey, watchImg, logo;
+var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900, points = 0, paused = true;
 var spriteSpeed = 500, pointSpeed = 100, sumOfDelta = 0, sumOfPoints = 0, lastCalledTime = new Date().getTime();
 
 window.onload = function() {
@@ -13,6 +13,9 @@ var format = function() {
 	createPlayer();
 	createObstacles();
 	createKeys();
+	createMenu();
+	createButtons();
+	drawMenu();
 	addEventListeners();
 };
 
@@ -82,6 +85,40 @@ var randomiseKeys = function() {
 	keyArray[2] = new Key(400, "key3");
 };
 
+var createMenu = function() {
+	logo = getImage("images/logo.png");
+};
+
+//button object
+function Button(xL, xR, yT, yB) {
+	this.xLeft = xL;
+	this.xRight = xR;
+	this.yTop = yT;
+	this.yBottom = yB;
+}
+
+Button.prototype.click = function(event) {
+	var rect = canvas.getBoundingClientRect();
+    var clickX = event.clientX - rect.left;
+    var clickY = event.clientY - rect.top;
+
+    if (clickX >= this.xLeft && clickX <= this.xRight
+    		&& clickY >= this.yTop && clickY <= this.yBottom) {
+		return true;
+	}
+	return false;
+};
+//button object ends
+
+var createButtons = function() {
+	start = new Button(324, 575, 375, 450);
+	startText = "START";
+}
+
+var drawMenu = function() {
+	ctx.drawImage(bgImage, 0, 0, 900, 625, 0, 0, canvas.width, canvas.height);
+};
+
 var addEventListeners = function() {
 	directions = new Array();
 	directions[0] = "left";
@@ -123,6 +160,14 @@ var addEventListeners = function() {
 	window.addEventListener("keyup", function(e) {
 		player.isMoving = false;
 	}, false);
+
+	window.addEventListener("click", function(e) {
+		//clicking on start button
+		if (start.click(e)) {
+			//peli alkaa
+			paused = false;
+		}
+	}, false);
 	
 };
 
@@ -133,8 +178,8 @@ var animate = function() {
 		render();
 		update();
 		isGameOver();
-		requestId = window.requestAnimationFrame(animate);
 	}
+	requestId = window.requestAnimationFrame(animate);
 	
 	/*
 	window.setTimeout(function() {
@@ -157,8 +202,8 @@ var clear = function() {
 var render = function() {
 
 	//background
-	ctx.drawImage(bgImage, 0, 0, 900, 625, bgX1, 0, canvas.width, canvas.height);
-	ctx.drawImage(bgImage, 0, 0, 900, 625, bgX2, 0, canvas.width, canvas.height);
+	ctx.drawImage(bgImage, 0, 625, 900, 625, bgX1, 0, canvas.width, canvas.height);
+	ctx.drawImage(bgImage, 0, 625, 900, 625, bgX2, 0, canvas.width, canvas.height);
 	
 	//obstacles
 	for (var i = 0; i < obstacle.length; i++) {
@@ -218,10 +263,13 @@ var render = function() {
 	//points text
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "18px Georgia";
-	ctx.fillText("SCORE", 27, 40);
+	ctx.fillText("SCORE", 110, 50);
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "30px Georgia";
-	ctx.fillText(points, 27, 75);
+	ctx.fillText(points, 110, 80);
+
+	//logo
+	ctx.drawImage(logo, 0, 0, 277, 80, canvas.width/2-277/2, 10, 277, 80);
 
 };
 
@@ -253,6 +301,11 @@ var updateBg = function() {
 };
 
 var collisionDetection = function() {
+	obsCollision();
+	collectKey();
+};
+
+var obsCollision = function() {
 	for (var i = 0; i <  obstacle.length; i++) {
 		if (obstacle[i].greyed == false) {		// jotta "harmaana" olevista esteistä pääsee läpi, testattu ja toimii		
 			if (obstacle[i].x < player.x + player.width  && obstacle[i].x + obstacle[i].width  > player.x &&
@@ -289,8 +342,6 @@ var collisionDetection = function() {
 			}
 		}
 	}
-
-	collectKey();
 };
 
 var collectKey = function() {
@@ -300,8 +351,8 @@ var collectKey = function() {
 				player.addKey(keyArray[i].id);
 				keyArray.splice(i, 1);
 		}
-	};
-}
+	}
+};
 
 var updateSprite = function() {
 	if (sumOfDelta >= spriteSpeed) {
@@ -325,6 +376,8 @@ var updatePoints = function() {
 var isGameOver = function() {
 	if (player.x < 0 - player.width) { //jos pelaaja on pelilaudan ulkopuolella (vasemmalla)
 		paused = true;
+		drawMenu();
+		createButtons();
 	}
 };
 
@@ -548,5 +601,3 @@ var randomKeyPosition = function() {
 
 	return pos;
 }
-
-
