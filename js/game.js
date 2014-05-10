@@ -39,7 +39,7 @@ var getImage = function(path) {
 };
 
 var createPlayer = function() {
-	player = new Player(canvas.width/2-playerSpriteX/2, canvas.height/2-playerSpriteY/2);
+	player = new Player(100, canvas.height/2-playerSpriteY/2); //x = canvas.width/2-playerSpriteX/2, jos pelaaja piirretään keskelle kenttää
 	//playerImg = player.getImage(player.spriteSrc); //getImage käyttäen playerin omaa metodia
 	playerImg = getImage("images/playersprite.png");
 	player.createKeys();

@@ -69,12 +69,12 @@ Player.prototype.moveLeft = function() {
 };
 
 Player.prototype.moveUp = function() {
-	if (this.y > 0) {
+	if (this.y > 100) {
 		this.y -= this.speed;
 		this.frameY = 2;
 	}
 	else {
-		this.y = 0;
+		this.y = 100;
 	}
 };
 
