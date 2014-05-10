@@ -72,7 +72,8 @@ var createKeys = function() {
 	homeKey = getImage("images/homekey.png");
 	workKey = getImage("images/workkey.png");
 	watchImg = getImage("images/watch.png");
-	randomiseKeys();
+	//randomiseKeys();
+
 };
 
 var randomiseKeys = function() {
@@ -215,7 +216,7 @@ var update = function() {
 	}
 	collisionDetection();
 	updateSprite();
-	//updateKeys();
+	updateKeys();
 	updateObstacleWall();
 	updatePoints();
 };
@@ -275,6 +276,10 @@ var collisionDetection = function() {
 			}
 		}
 	}
+
+	for (i = 0; i < keyArray.length; i++) {
+		if (true) {};
+	};
 };
 
 
@@ -296,7 +301,6 @@ var updateSprite = function() {
 var count = 0; // +1 aina kun uusi seinämä tehdään
 var obsProp = 0.3; // todnäk jolla seinään tulee "avattava" este
 var yArray = [];
-var keyArray = [];
 var a = 0;
 var thisTime = new Date().getTime();
 var lastTime = thisTime;
@@ -306,6 +310,7 @@ var key1Time = new Date().getTime();
 var key2Time = new Date().getTime();
 var key3Time = new Date().getTime();
 var key4Time = new Date().getTime();
+var lastKeyMade = new Date().getTime();
 
 var updateObstacleWall = function() {
 	thisTime = new Date().getTime();
@@ -331,11 +336,12 @@ var updateKeys = function() {
 			player.removeKey("key4");
 		}
 
-		if (key1Time > 22000 
-			&& key2Time > 22000 
-			&& key3Time > 22000 
-			&& key4Time > 22000) {
-				makeKey;
+		if (new Date().getTime() - key1Time > 22000 
+			&& new Date().getTime() - key2Time > 22000 
+			&& new Date().getTime() - key3Time > 22000 
+			&& new Date().getTime() - key4Time > 22000
+			&& new Date().getTime() - lastKeyMade > 12000) {
+				makeKey();
 		}
 		
 		keyAdded = true;
@@ -344,28 +350,37 @@ var updateKeys = function() {
 }
 
 var makeKey = function() {
-	if (Math.random() < 0.1 && count > 10) {
+
+	if (Math.random() < 0.1 && count > 10) { // VÄÄRÄT ARVOT !!!
 		keyArray.push(new Key(randomKeyPosition(), "key1"));
+		lastKeyMade = new Date().getTime();
+		
+		console.log(keyArray[0]);
+		
 		return;
 	}
 
 	if (Math.random() < 0.1 && count > 15) {
 		keyArray.push(new Key(randomKeyPosition(), "key2"));
+		lastKeyMade = new Date().getTime();
 		return;
 	}
 
 	if (Math.random() < 0.1 && count > 20) {
 		keyArray.push(new Key(randomKeyPosition(), "key3"));
+		lastKeyMade = new Date().getTime();
 		return;
 	}
 
 	if (Math.random() < 0.1 && count > 25) {
 		keyArray.push(new Key(randomKeyPosition(), "key4"));
+		lastKeyMade = new Date().getTime();
 		return;
 	}
 
 	if (Math.random() < 0.1 && count > 20) {
 		keyArray.push(new Key(randomKeyPosition(), "watch"));
+		lastKeyMade = new Date().getTime();
 	}
 }
 
