@@ -34,7 +34,40 @@ Player.prototype.addKey = function(id) {
 	else if (id == "key4") {
 		this.keys.key4 = true;
 	}
+	else if (id == "watch") {
+		this.keys.key1 = true;
+		this.keys.key2 = true;
+		this.keys.key3 = true;
+		this.keys.key4 = true;
+	}
 };
+
+Player.prototype.removeKey = function(id) {
+	if (id == "key1") {
+		this.keys.key1 = false;
+	}
+	else if (id == "key2") {
+		this.keys.key2 = false;
+	}
+	else if (id == "key3") {
+		this.keys.key3 = false;
+	}
+	else if (id == "key4") {
+		this.keys.key4 = false;
+	}
+	else if (id == "watch") {
+		this.keys.key1 = false;
+		this.keys.key2 = false;
+		this.keys.key3 = false;
+		this.keys.key4 = false;
+	}
+};
+
+Player.prototype.hasKeys = function() { // kertoo onko pelaajalla ollenkaan avaimia
+	if (this.keys.key1 == true || this.keys.key2 == true || this.keys.key3 == true || this.keys.key4 == true) {
+		return true;
+	} else return false;
+}
 
 Player.prototype.move = function(canvas) {
 	this.canvas = canvas;
