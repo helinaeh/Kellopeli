@@ -11,6 +11,7 @@ var format = function() {
 	setCanvas();
 	createPlayer();
 	createObstacles();
+	createKeys();
 	addEventListeners();
 };
 
@@ -18,7 +19,7 @@ var setCanvas = function() {
 	canvas = document.getElementById("game");
 	ctx = canvas.getContext("2d");
 	canvas.width = 900;
-	canvas.height = 525;
+	canvas.height = 625;
 	setBackground();
 };
 
@@ -61,6 +62,12 @@ var randomiseObstacles = function() {
 	obstacle[0] = new Car(200, false);
 };
 */
+
+var createKeys = function() {
+	keyArray = new Array();
+	carKey = getImage("images/carkey.png");
+	keyArray[0] = new Key(200, 1);
+};
 
 var addEventListeners = function() {
 	directions = new Array();
@@ -130,8 +137,8 @@ var clear = function() {
 };
 
 var render = function() {
-	ctx.drawImage(bgImage, 0, 0, 900, 525, bgX1, 0, canvas.width, canvas.height);
-	ctx.drawImage(bgImage, 0, 0, 900, 525, bgX2, 0, canvas.width, canvas.height);
+	ctx.drawImage(bgImage, 0, 0, 900, 625, bgX1, 0, canvas.width, canvas.height);
+	ctx.drawImage(bgImage, 0, 0, 900, 625, bgX2, 0, canvas.width, canvas.height);
 	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
 	for (var i = 0; i < obstacle.length; i++) {
 		//console.log(i);
