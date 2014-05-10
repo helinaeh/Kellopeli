@@ -34,6 +34,12 @@ Player.prototype.addKey = function(id) {
 	else if (id == "key4") {
 		this.keys.key4 = true;
 	}
+	else if (id == "watch") {
+		this.keys.key1 = true;
+		this.keys.key2 = true;
+		this.keys.key3 = true;
+		this.keys.key4 = true;
+	}
 };
 
 Player.prototype.move = function(canvas) {

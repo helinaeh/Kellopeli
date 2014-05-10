@@ -269,23 +269,27 @@ var updateKeys = function() {
 
 var makeKey = function() {
 	if (Math.random() < 0.1 && count > 10) {
-		keyArray.push(new Key(randomKeyPosition(), key1));
+		keyArray.push(new Key(randomKeyPosition(), "key1"));
 		return;
 	}
 
-	if (Math.random() < 0.09 && count > 15) {
-		keyArray.push(new Key(randomKeyPosition(), key2));
+	if (Math.random() < 0.1 && count > 15) {
+		keyArray.push(new Key(randomKeyPosition(), "key2"));
 		return;
 	}
 
-	if (Math.random() < 0.08 && count > 20) {
-		keyArray.push(new Key(randomKeyPosition(), key3));
+	if (Math.random() < 0.1 && count > 20) {
+		keyArray.push(new Key(randomKeyPosition(), "key3"));
 		return;
 	}
 
-	if (Math.random() < 0.07 && count > 25) {
-		keyArray.push(new Key(randomKeyPosition(), key4));
+	if (Math.random() < 0.1 && count > 25) {
+		keyArray.push(new Key(randomKeyPosition(), "key4"));
 		return;
+	}
+
+	if (Math.random() < 0.1 && count > 20) {
+		keyArray.push(new Key(randomKeyPosition(), "watch"));
 	}
 }
 
