@@ -132,6 +132,7 @@ var animate = function() {
 		clear();
 		render();
 		update();
+		//isGameOver();
 		requestId = window.requestAnimationFrame(animate);
 	}
 	
@@ -200,7 +201,19 @@ var render = function() {
 		}
 	}
 
-	//keys the player has collected
+	//keys the player has collected (menu)
+	if (player.keys.key1 == true) {
+		ctx.drawImage(carKey, 0, 0, 35, 35, 830, 32, 35, 35);
+	}
+	if (player.keys.key2 == true) {
+		ctx.drawImage(garageKey, 0, 0, 35, 35, 760, 32, 35, 35);
+	}
+	if (player.keys.key3 == true) {
+		ctx.drawImage(homeKey, 0, 0, 35, 35, 690, 32, 35, 35);
+	}
+	if (player.keys.key4 == true) {
+		ctx.drawImage(workKey, 0, 0, 35, 35, 620, 32, 35, 35);
+	}
 
 	//points text
 	ctx.fillStyle = "rgb(250, 250, 250)";
@@ -305,6 +318,12 @@ var updatePoints = function() {
 	if (sumOfPoints >= pointSpeed) {
 		points++;
 		sumOfPoints = 0;
+	}
+};
+
+var isGameOver = function() {
+	if (true) { //jos pelaaja on pelilaudan ulkopuolella (vasemmalla)
+		paused = true;
 	}
 };
 
