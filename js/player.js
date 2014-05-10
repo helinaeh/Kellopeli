@@ -36,17 +36,6 @@ Player.prototype.addKey = function(id) {
 	}
 };
 
-Player.prototype.getImage = function(path) {
-	this.path = path;
-	var characterReady = false;
-	characterImage = new Image();
-	characterImage.onload = function () { //???????
-		characterReady = true;
-	};
-	characterImage.src = path;
-	return characterImage;
-};
-
 Player.prototype.move = function(canvas) {
 	this.canvas = canvas;
 	if (this.isMoving === true) {
