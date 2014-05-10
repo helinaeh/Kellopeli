@@ -18,7 +18,7 @@ var setCanvas = function() {
 	canvas = document.getElementById("game");
 	ctx = canvas.getContext("2d");
 	canvas.width = 900;
-	canvas.height = 525;
+	canvas.height = 625;
 	setBackground();
 };
 
@@ -56,7 +56,6 @@ var createObstacles = function() {
 	createObstacleWall(900, false, false, false, false);
 	createObstacleWall(650, false, false, false, false);
 	createObstacleWall(400, false, false, false, false);
-	createObstacleWall(150, false, false, false, false);
 };
 
 /*
@@ -133,8 +132,8 @@ var clear = function() {
 };
 
 var render = function() {
-	ctx.drawImage(bgImage, 0, 0, 900, 525, bgX1, 0, canvas.width, canvas.height);
-	ctx.drawImage(bgImage, 0, 0, 900, 525, bgX2, 0, canvas.width, canvas.height);
+	ctx.drawImage(bgImage, 0, 0, 900, 625, bgX1, 0, canvas.width, canvas.height);
+	ctx.drawImage(bgImage, 0, 0, 900, 625, bgX2, 0, canvas.width, canvas.height);
 	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
 	for (var i = 0; i < obstacle.length; i++) {
 		//console.log(i);
@@ -263,22 +262,22 @@ var updateKeys = function() {
 
 var makeKey = function() {
 	if (Math.random() < 0.1 && count > 10) {
-		keyArray.push(new Key(key1, randomKeyPosition()));
+		keyArray.push(new Key(randomKeyPosition(), key1));
 		return;
 	}
 
 	if (Math.random() < 0.09 && count > 15) {
-		keyArray.push(new Key(key2, randomKeyPosition()));
+		keyArray.push(new Key(randomKeyPosition(), key2));
 		return;
 	}
 
 	if (Math.random() < 0.08 && count > 20) {
-		keyArray.push(new Key(key3, randomKeyPosition()));
+		keyArray.push(new Key(randomKeyPosition(), key3));
 		return;
 	}
 
 	if (Math.random() < 0.07 && count > 25) {
-		keyArray.push(new Key(key4, randomKeyPosition()));
+		keyArray.push(new Key(randomKeyPosition(), key4));
 		return;
 	}
 }
@@ -325,7 +324,7 @@ var addObstacles = function(x, car, hom, gar, wor) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(4);
 			if (position != -1) {
-				obstacle.push(new Work(x, position * 35, wor));
+				obstacle.push(new Work(x, position * 35 + 100, wor));
 				yArray.push(position, position+1, position+2, position+3); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 				break;
@@ -337,7 +336,7 @@ var addObstacles = function(x, car, hom, gar, wor) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(3);
 			if (position != -1) {
-				obstacle.push(new Home(x, position * 35, hom));
+				obstacle.push(new Home(x, position * 35 + 100, hom));
 				yArray.push(position, position+1, position+2); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 				break;
@@ -349,7 +348,7 @@ var addObstacles = function(x, car, hom, gar, wor) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(2);
 			if (position != -1) {
-				obstacle.push(new Garage(x, position * 35, gar));
+				obstacle.push(new Garage(x, position * 35 + 100, gar));
 				yArray.push(position, position+1); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 				break;
@@ -362,7 +361,7 @@ var addObstacles = function(x, car, hom, gar, wor) {
 			position = randomPosition(1);
 			if (position != -1) {
 				//console.log(position);
-				obstacle.push(new Car(x, position * 35, car));
+				obstacle.push(new Car(x, position * 35 + 100, car));
 				yArray.push(position); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 				break;
@@ -374,7 +373,7 @@ var addObstacles = function(x, car, hom, gar, wor) {
 var addWalls = function(x) {
 	for (var h = 0; h < 15; h++) { // käy läpi indeksit
 		if (yArray.indexOf(h) == -1) {
-			obstacle.push(new Wall(x, h*35));
+			obstacle.push(new Wall(x, h * 35 + 100));
 		} // lisää seinän (joka on 35px korkea)
 	}
 }
@@ -407,6 +406,8 @@ var randomKeyPosition = function() {
 	var pos = Math.round(Math.random() * 10);
 
 	if (pos > 5) pos = pos + 5;
+
+	pos = pos * 35 + 100;
 
 	return pos;
 }
