@@ -187,9 +187,9 @@ var addEventListeners = function() {
 			//peli alkaa
 			points = 0;
 			pointSpeed = 100;
-			format();
+			//format();
 			paused = false;
-			soundEfx.play();
+			intro.play();
 		}
 	}, false);
 	
