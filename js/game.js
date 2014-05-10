@@ -44,7 +44,6 @@ var createPlayer = function() {
 	//playerImg = player.getImage(player.spriteSrc); //getImage käyttäen playerin omaa metodia
 	playerImg = getImage("images/playersprite.png");
 	player.createKeys();
-	//player.addKey("key1");
 };
 
 var createObstacles = function() {
@@ -150,9 +149,15 @@ var clear = function() {
 };
 
 var render = function() {
+
+	//background
 	ctx.drawImage(bgImage, 0, 0, 900, 625, bgX1, 0, canvas.width, canvas.height);
 	ctx.drawImage(bgImage, 0, 0, 900, 625, bgX2, 0, canvas.width, canvas.height);
+	
+	//player
 	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
+	
+	//obstacles
 	for (var i = 0; i < obstacle.length; i++) {
 		if (obstacle[i].type == 1) {
 			ctx.drawImage(carImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
@@ -170,6 +175,8 @@ var render = function() {
 			ctx.drawImage(wallImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 		}
 	}
+	
+	//keys on the game area
 	for (var i = 0; i < keyArray.length; i++) {
 		if (keyArray[i].id == "key1") {
 			ctx.drawImage(carKey, 0, 0, 35, 35, keyArray[i].x, keyArray[i].y, 35, 35);
@@ -187,6 +194,14 @@ var render = function() {
 			ctx.drawImage(watchImg, 0, 0, 35, 35, keyArray[i].x, keyArray[i].y, 35, 35);
 		}
 	}
+
+	//keys the player has collected
+
+	//points text
+	ctx.fillStyle = "rgb(250, 250, 250)";
+	ctx.font = "30px Georgia";
+	ctx.fillText("TESTITEKSTI", 200, 65);
+
 };
 
 var update = function() {
@@ -220,7 +235,7 @@ var updatePoints = function() {
 	points = points + 1;
 }
 
-var collisionDetection = function() { //muokkaa törmäystestit toimiviksi!!!!!
+var collisionDetection = function() {
 	for (var i = 0; i <  obstacle.length; i++) {
 		if (obstacle[i].greyed == false) {		// jotta "harmaana" olevista esteistä pääsee läpi, testattu ja toimii
 			
@@ -272,7 +287,6 @@ var updateSprite = function() {
 		sumOfDelta = 0;
 	}
 };
-
 
 
 /*************/
