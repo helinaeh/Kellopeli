@@ -1,4 +1,4 @@
-function Obstacle(x, y, spriteSrc, type, height, greyed) {
+function Obstacle(x, y, spriteSrc, type, height, greyed, speed) {
 	this.x = x; //este luodaan pelinäkymän ulkopuolelle, kohtaan 900
 	this.y = y;
 	this.width = 35;
@@ -7,7 +7,7 @@ function Obstacle(x, y, spriteSrc, type, height, greyed) {
 	this.type = type;
 	this.greyed = greyed;
 	this.obsImage = null;
-	this.speed = 1;
+	this.speed = speed;
 }
 
 Obstacle.prototype.move = function(canvas) {

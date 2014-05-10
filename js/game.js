@@ -1,6 +1,6 @@
 var canvas, ctx, bgImage, player, playerImg, obstacle, carImg, garImg, homeImg, workImg, delta;
 var carKey, garageKey, homeKey, workKey, watchImg;
-var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900, points = 0, paused = false;
+var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900, points = 0, paused = false, speed = 2, speedTime = new Date().getTime();
 var spriteSpeed = 500, pointSpeed = 100, sumOfDelta = 0, sumOfPoints = 0, lastCalledTime = new Date().getTime();
 
 window.onload = function() {
@@ -77,9 +77,9 @@ var createKeys = function() {
 };
 
 var randomiseKeys = function() {
-	keyArray[0] = new Key(200, "key1");
-	keyArray[1] = new Key(300, "key2");
-	keyArray[2] = new Key(400, "key3");
+	keyArray[0] = new Key(200, "key1", speed);
+	keyArray[1] = new Key(300, "key2", speed);
+	keyArray[2] = new Key(400, "key3", speed);
 };
 
 var addEventListeners = function() {
@@ -239,16 +239,17 @@ var update = function() {
 	updateKeys();
 	updateObstacleWall();
 	updatePoints();
+	updateSpeed();
 };
 
 var updateBg = function() {
-	bgX1--;
+	bgX1 = bgX1 - speed * 1.5;
 	if (bgX1 <= -900) {
-		bgX1 = 900;
+		bgX1 = 870;
 	}
-	bgX2--;
+	bgX2 = bgX2 - speed * 1.5;
 	if (bgX2 <= -900) {
-		bgX2 = 900;
+		bgX2 = 870;
 	}
 };
 
@@ -322,6 +323,25 @@ var updatePoints = function() {
 	}
 };
 
+var updateSpeed = function() {
+	if (new Date().getTime() - speedTime > 7000 && speed <= 5) {
+
+		console.log(speed);
+
+		speed = speed * 1.1;
+		player.speed = player.speed + 0.1;
+		speedTime = new Date().getTime();
+
+		for (i = 0; i < obstacle.length; i++) {
+			obstacle[i].speed = speed;
+		}
+
+		for (i = 0; i < keyArray.length; i++) {
+			keyArray[i].speed = speed;
+		}
+	}
+}
+
 var isGameOver = function() {
 	if (player.x < 0 - player.width) { //jos pelaaja on pelilaudan ulkopuolella (vasemmalla)
 		paused = true;
@@ -336,58 +356,51 @@ var isGameOver = function() {
 var count = 0; // +1 aina kun uusi seinämä tehdään
 var obsProp = 0.7; // todnäk jolla seinään tulee "avattava" este
 var yArray = [];
-var a = 0;
-var thisTime = new Date().getTime();
-var lastTime = thisTime;
-var span = 0;
-var keyAdded = false;
-var key1Time = new Date().getTime();
-var key2Time = new Date().getTime();
-var key3Time = new Date().getTime();
-var key4Time = new Date().getTime();
-var lastKeyMade = new Date().getTime();
+var a = 0, thisTime = new Date().getTime(), lastTime = thisTime, span = 0, keyAdded = false;
+var key1Time = new Date().getTime(), key2Time = new Date().getTime(), key3Time = new Date().getTime();
+var key4Time = new Date().getTime(), lastKeyMade = new Date().getTime();
 
 var updateObstacleWall = function() {
 	thisTime = new Date().getTime();
 
 	span = thisTime - lastTime;
 
-	if (span > 4000) {
+	if (span > 4000 / speed) {
 		createObstacleWall(900, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
 		lastTime = thisTime;
 	}
 }
 
 var updateKeys = function() {
-	if (span > 2000 && keyAdded == false) {
+	if (span > 2000 / speed && keyAdded == false) {
 
-		if (player.keys.key1 == true && new Date().getTime() > key1Time + 32000) {
+		if (player.keys.key1 == true && new Date().getTime() > key1Time + 32000 / speed) {
 			player.removeKey("key1");
-		} else if (player.keys.key2 == true && new Date().getTime() > key2Time + 32000) {
+		} else if (player.keys.key2 == true && new Date().getTime() > key2Time + 32000 / speed) {
 			player.removeKey("key2");
-		} else if (player.keys.key3 == true && new Date().getTime() > key3Time + 32000) {
+		} else if (player.keys.key3 == true && new Date().getTime() > key3Time + 32000 / speed) {
 			player.removeKey("key3");
-		} else if (player.keys.key4 == true && new Date().getTime() > key4Time + 32000) {
+		} else if (player.keys.key4 == true && new Date().getTime() > key4Time + 32000 / speed) {
 			player.removeKey("key4");
 		}
 
-		if (new Date().getTime() - key1Time > 22000 
-			&& new Date().getTime() - key2Time > 22000 
-			&& new Date().getTime() - key3Time > 22000 
-			&& new Date().getTime() - key4Time > 22000
-			&& new Date().getTime() - lastKeyMade > 12000) {
+		if (new Date().getTime() - key1Time > 22000 / speed
+			&& new Date().getTime() - key2Time > 22000 / speed
+			&& new Date().getTime() - key3Time > 22000 / speed
+			&& new Date().getTime() - key4Time > 22000 / speed
+			&& new Date().getTime() - lastKeyMade > 16000 / speed) {
 				makeKey();
 		}
 		
 		keyAdded = true;
 
-	} else if (span < 2000 && keyAdded == true) keyAdded = false;
+	} else if (span < 2000 / speed && keyAdded == true) keyAdded = false;
 }
 
 var makeKey = function() {
 
 	if (Math.random() < 0.2 && count > 2) { // VÄÄRÄT ARVOT !!!
-		keyArray.push(new Key(randomKeyPosition(), "key1"));
+		keyArray.push(new Key(randomKeyPosition(), "key1", speed));
 		lastKeyMade = new Date().getTime();
 		
 		console.log(keyArray[0]);
@@ -396,25 +409,25 @@ var makeKey = function() {
 	}
 
 	if (Math.random() < 0.2 && count > 5) {
-		keyArray.push(new Key(randomKeyPosition(), "key2"));
+		keyArray.push(new Key(randomKeyPosition(), "key2", speed));
 		lastKeyMade = new Date().getTime();
 		return;
 	}
 
 	if (Math.random() < 0.2 && count > 7) {
-		keyArray.push(new Key(randomKeyPosition(), "key3"));
+		keyArray.push(new Key(randomKeyPosition(), "key3", speed));
 		lastKeyMade = new Date().getTime();
 		return;
 	}
 
 	if (Math.random() < 0.2 && count > 10) {
-		keyArray.push(new Key(randomKeyPosition(), "key4"));
+		keyArray.push(new Key(randomKeyPosition(), "key4", speed));
 		lastKeyMade = new Date().getTime();
 		return;
 	}
 
 	if (Math.random() < 0.2 && count > 12) {
-		keyArray.push(new Key(randomKeyPosition(), "watch"));
+		keyArray.push(new Key(randomKeyPosition(), "watch", speed));
 		lastKeyMade = new Date().getTime();
 	}
 }
@@ -441,16 +454,17 @@ var createObstacleWall = function(x, car, hom, gar, wor) { // Parametrit ovat tr
 
 var addHole = function() {
 	var position = Math.round(Math.random() * 12);
-	var holeSize = 3;
+	var holeSize = 4;
 	var p = 0;
 
-	if (count > 80 && Math.random() < 0.01) return;
+	//if (count > 80 && Math.random() < 0.01) return;
 
 	do {
 		yArray.push(position);
 		position = position + 1;
 		p = p + 1;
-	} while (p < holeSize - Math.round(Math.random() - 0.4) - Math.floor(count / 25));
+	} while (p < holeSize - Math.round(Math.random() - 0.4) - Math.floor(count / 25) 
+		|| p < 2 - Math.round(Math.random() - 0.4));
 }
 
 var addObstacles = function(x, car, hom, gar, wor) {
@@ -461,7 +475,7 @@ var addObstacles = function(x, car, hom, gar, wor) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(4);
 			if (position != -1) {
-				obstacle.push(new Work(x, position * 35 + 100, wor));
+				obstacle.push(new Work(x, position * 35 + 100, wor, speed));
 				yArray.push(position, position+1, position+2, position+3); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 				break;
@@ -473,7 +487,7 @@ var addObstacles = function(x, car, hom, gar, wor) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(3);
 			if (position != -1) {
-				obstacle.push(new Home(x, position * 35 + 100, hom));
+				obstacle.push(new Home(x, position * 35 + 100, hom, speed));
 				yArray.push(position, position+1, position+2); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 				break;
@@ -485,7 +499,7 @@ var addObstacles = function(x, car, hom, gar, wor) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(2);
 			if (position != -1) {
-				obstacle.push(new Garage(x, position * 35 + 100, gar));
+				obstacle.push(new Garage(x, position * 35 + 100, gar, speed));
 				yArray.push(position, position+1); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 				break;
@@ -498,7 +512,7 @@ var addObstacles = function(x, car, hom, gar, wor) {
 			position = randomPosition(1);
 			if (position != -1) {
 				//console.log(position);
-				obstacle.push(new Car(x, position * 35 + 100, car));
+				obstacle.push(new Car(x, position * 35 + 100, car, speed));
 				yArray.push(position); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 				break;
@@ -510,7 +524,7 @@ var addObstacles = function(x, car, hom, gar, wor) {
 var addWalls = function(x) {
 	for (var h = 0; h < 15; h++) { // käy läpi indeksit
 		if (yArray.indexOf(h) == -1) {
-			obstacle.push(new Wall(x, h * 35 + 100));
+			obstacle.push(new Wall(x, h * 35 + 100, speed));
 		} // lisää seinän (joka on 35px korkea)
 	}
 }
@@ -540,9 +554,7 @@ var isEmpty = function(position, height) {
 }
 
 var randomKeyPosition = function() {
-	var pos = Math.round(Math.random() * 10);
-
-	if (pos > 5) pos = pos + 5;
+	var pos = Math.round(Math.random() * 13) + 1;
 
 	pos = pos * 35 + 100;
 
