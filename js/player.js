@@ -28,7 +28,7 @@ Player.prototype.addKey = function(id) {
 			if (obstacle[i].type == 1) obstacle[i].greyed = true;
 		}
 		key1Time = new Date().getTime();
-		points = points + 1000;
+		points = points + 100;
 	}
 	else if (id == "key2") {
 		this.keys.key2 = true;
@@ -36,7 +36,7 @@ Player.prototype.addKey = function(id) {
 			if (obstacle[i].type == 2) obstacle[i].greyed = true;
 		}
 		key2Time = new Date().getTime();
-		points = points + 1000;
+		points = points + 100;
 	}
 	else if (id == "key3") {
 		this.keys.key3 = true;
@@ -44,7 +44,7 @@ Player.prototype.addKey = function(id) {
 			if (obstacle[i].type == 3) obstacle[i].greyed = true;
 		}
 		key3Time = new Date().getTime();
-		points = points + 1000;
+		points = points + 100;
 	}
 	else if (id == "key4") {
 		this.keys.key4 = true;
@@ -52,14 +52,14 @@ Player.prototype.addKey = function(id) {
 			if (obstacle[i].type == 4) obstacle[i].greyed = true;
 		}
 		key4Time = new Date().getTime();
-		points = points + 1000;
+		points = points + 100;
 	}
 	else if (id == "watch") {
 		player.addKey("key1");
 		player.addKey("key2");
 		player.addKey("key3");
 		player.addKey("key4");
-		points = points + 6000; // oikeasti antaa 10000 pistettä yhteensä, koska myös
+		points = points + 600;	// oikeasti antaa 10000 pistettä yhteensä, koska myös
 								// yksittäisten avainten lisäämisestä tulee pisteitä
 	}
 };
@@ -67,21 +67,27 @@ Player.prototype.addKey = function(id) {
 Player.prototype.removeKey = function(id) {
 	if (id == "key1") {
 		this.keys.key1 = false;
+		for (var i = 0; i < obstacle.length; i++) {
+			if (obstacle[i].type == 1) obstacle[i].greyed = false;
+		}
 	}
 	else if (id == "key2") {
 		this.keys.key2 = false;
+		for (var i = 0; i < obstacle.length; i++) {
+			if (obstacle[i].type == 2) obstacle[i].greyed = true;
+		}
 	}
 	else if (id == "key3") {
 		this.keys.key3 = false;
+		for (var i = 0; i < obstacle.length; i++) {
+			if (obstacle[i].type == 3) obstacle[i].greyed = true;
+		}
 	}
 	else if (id == "key4") {
 		this.keys.key4 = false;
-	}
-	else if (id == "watch") {
-		this.keys.key1 = false;
-		this.keys.key2 = false;
-		this.keys.key3 = false;
-		this.keys.key4 = false;
+		for (var i = 0; i < obstacle.length; i++) {
+			if (obstacle[i].type == 4) obstacle[i].greyed = true;
+		}
 	}
 };
 
