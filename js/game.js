@@ -334,7 +334,7 @@ var isGameOver = function() {
 /*************/
 
 var count = 0; // +1 aina kun uusi seinämä tehdään
-var obsProp = 0.3; // todnäk jolla seinään tulee "avattava" este
+var obsProp = 0.7; // todnäk jolla seinään tulee "avattava" este
 var yArray = [];
 var a = 0;
 var thisTime = new Date().getTime();
@@ -386,7 +386,7 @@ var updateKeys = function() {
 
 var makeKey = function() {
 
-	if (Math.random() < 0.1 && count > 10) { // VÄÄRÄT ARVOT !!!
+	if (Math.random() < 0.2 && count > 2) { // VÄÄRÄT ARVOT !!!
 		keyArray.push(new Key(randomKeyPosition(), "key1"));
 		lastKeyMade = new Date().getTime();
 		
@@ -395,25 +395,25 @@ var makeKey = function() {
 		return;
 	}
 
-	if (Math.random() < 0.1 && count > 15) {
+	if (Math.random() < 0.2 && count > 5) {
 		keyArray.push(new Key(randomKeyPosition(), "key2"));
 		lastKeyMade = new Date().getTime();
 		return;
 	}
 
-	if (Math.random() < 0.1 && count > 20) {
+	if (Math.random() < 0.2 && count > 7) {
 		keyArray.push(new Key(randomKeyPosition(), "key3"));
 		lastKeyMade = new Date().getTime();
 		return;
 	}
 
-	if (Math.random() < 0.1 && count > 25) {
+	if (Math.random() < 0.2 && count > 10) {
 		keyArray.push(new Key(randomKeyPosition(), "key4"));
 		lastKeyMade = new Date().getTime();
 		return;
 	}
 
-	if (Math.random() < 0.1 && count > 20) {
+	if (Math.random() < 0.2 && count > 12) {
 		keyArray.push(new Key(randomKeyPosition(), "watch"));
 		lastKeyMade = new Date().getTime();
 	}
@@ -457,7 +457,7 @@ var addObstacles = function(x, car, hom, gar, wor) {
 
 	var position = 0;
 
-	for (var i = 0; i < Math.floor(count / 20); i++) { //lisätään työpaikka (ehkä)
+	for (var i = 0; i < Math.floor(count / 10); i++) { //lisätään työpaikka (ehkä)
 		if(Math.random() <= obsProp) {
 			position = randomPosition(4);
 			if (position != -1) {
@@ -469,7 +469,7 @@ var addObstacles = function(x, car, hom, gar, wor) {
 		}
 	}
 
-	for (i = 0; i < Math.floor(count / 15); i++) { //lisätään koti (ehkä)
+	for (i = 0; i < Math.floor(count / 7); i++) { //lisätään koti (ehkä)
 		if(Math.random() <= obsProp) {
 			position = randomPosition(3);
 			if (position != -1) {
@@ -481,7 +481,7 @@ var addObstacles = function(x, car, hom, gar, wor) {
 		}
 	}
 
-	for (i = 0; i < Math.floor(count / 10); i++) { //lisätään autotalli (ehkä)
+	for (i = 0; i < Math.floor(count / 5); i++) { //lisätään autotalli (ehkä)
 		if(Math.random() <= obsProp) {
 			position = randomPosition(2);
 			if (position != -1) {
@@ -493,7 +493,7 @@ var addObstacles = function(x, car, hom, gar, wor) {
 		}
 	}
 
-	for (i = 0; i < Math.floor(count / 5); i++) { //lisätään auto (ehkä)
+	for (i = 0; i < Math.floor(count / 2); i++) { //lisätään auto (ehkä)
 		if(Math.random() <= obsProp) {
 			position = randomPosition(1);
 			if (position != -1) {
