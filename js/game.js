@@ -291,11 +291,11 @@ var update = function() {
 };
 
 var updateBg = function() {
-	bgX1 = bgX1 - speed * 1.5;
+	bgX1 -= speed * 1.5;
 	if (bgX1 <= -900) {
 		bgX1 = 870;
 	}
-	bgX2 = bgX2 - speed * 1.5;
+	bgX2 -= speed * 1.5;
 	if (bgX2 <= -900) {
 		bgX2 = 870;
 	}
@@ -379,9 +379,9 @@ var updateSpeed = function() {
 
 		console.log(speed);
 
-		speed = speed * 1.1;
-		player.speed = player.speed + 0.1;
-		pointSpeed = pointSpeed - 5;
+		speed *= 1.1;
+		player.speed += 0.1;
+		pointSpeed -= 5;
 
 		speedTime = new Date().getTime();
 
