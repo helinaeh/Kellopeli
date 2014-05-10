@@ -381,6 +381,8 @@ var updateSpeed = function() {
 
 		speed = speed * 1.1;
 		player.speed = player.speed + 0.1;
+		pointSpeed = pointSpeed - 5;
+
 		speedTime = new Date().getTime();
 
 		for (i = 0; i < obstacle.length; i++) {
@@ -394,7 +396,7 @@ var updateSpeed = function() {
 }
 
 var isGameOver = function() {
-	if (player.x < 0 - player.width) { //jos pelaaja on pelilaudan ulkopuolella (vasemmalla)
+	if (player.x < 0) { //jos pelaaja on pelilaudan ulkopuolella (vasemmalla)
 		paused = true;
 		drawMenu();
 		createButtons();
