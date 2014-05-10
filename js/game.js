@@ -53,10 +53,10 @@ var createObstacles = function() {
 	workImg = getImage("images/worksprite.png");
 	wallImg = getImage("images/wallsprite.png");
 	//randomiseObstacles();
-	createObstacleWall(900, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
-	createObstacleWall(650, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
-	createObstacleWall(400, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
-	createObstacleWall(150, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
+	createObstacleWall(900, false, false, false, false);
+	createObstacleWall(650, false, false, false, false);
+	createObstacleWall(400, false, false, false, false);
+	createObstacleWall(150, false, false, false, false);
 };
 
 /*
