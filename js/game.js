@@ -117,6 +117,13 @@ var createButtons = function() {
 
 var drawMenu = function() {
 	ctx.drawImage(bgImage, 0, 0, 900, 625, 0, 0, canvas.width, canvas.height);
+	//points text
+	ctx.fillStyle = "rgb(250, 250, 250)";
+	ctx.font = "18px Georgia";
+	ctx.fillText("SCORE", 110, 50);
+	ctx.fillStyle = "rgb(250, 250, 250)";
+	ctx.font = "30px Georgia";
+	ctx.fillText(points, 110, 80);
 };
 
 var addEventListeners = function() {
