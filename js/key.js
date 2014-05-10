@@ -1,8 +1,8 @@
-function Key(y, id) {
+function Key(y, id, speed) {
 	this.id = id;
 	this.x = 900;
 	this.y = y;
-	this.speed = 1;
+	this.speed = speed;
 }
 
 Key.prototype.move = function(canvas) {
