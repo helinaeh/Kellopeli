@@ -25,24 +25,29 @@ Player.prototype.addKey = function(id) {
 	if (id == "key1") {
 		this.keys.key1 = true;
 		key1Time = new Date().getTime();
+		points = points + 1000;
 	}
 	else if (id == "key2") {
 		this.keys.key2 = true;
 		key2Time = new Date().getTime();
+		points = points + 1000;
 	}
 	else if (id == "key3") {
 		this.keys.key3 = true;
 		key3Time = new Date().getTime();
+		points = points + 1000;
 	}
 	else if (id == "key4") {
 		this.keys.key4 = true;
 		key4Time = new Date().getTime();
+		points = points + 1000;
 	}
 	else if (id == "watch") {
 		Player.addKey("key1");
 		Player.addKey("key2");
 		Player.addKey("key3");
 		Player.addKey("key4");
+		points = points + 10000;
 	}
 };
 
@@ -67,11 +72,14 @@ Player.prototype.removeKey = function(id) {
 	}
 };
 
+/*
+OLIKIN TURHA
 Player.prototype.hasKeys = function() { // kertoo onko pelaajalla ollenkaan avaimia
 	if (this.keys.key1 == true || this.keys.key2 == true || this.keys.key3 == true || this.keys.key4 == true) {
 		return true;
 	} else return false;
 };
+*/
 
 Player.prototype.move = function(canvas) {
 	this.canvas = canvas;

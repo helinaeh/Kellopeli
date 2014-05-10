@@ -1,4 +1,4 @@
-var canvas, ctx, bgImage, player, playerImg, obstacle, carImg, garImg, homeImg, workImg, delta;
+var canvas, ctx, bgImage, player, playerImg, obstacle, carImg, garImg, homeImg, workImg, delta, points;
 var carKey, garageKey, homeKey, workKey, watchImg;
 var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900;
 var spriteSpeed = 500, sumOfDelta = 0, lastCalledTime = new Date().getTime();
@@ -202,6 +202,7 @@ var update = function() {
 	updateSprite();
 	//updateKeys();
 	updateObstacleWall();
+	updatePoints();
 };
 
 var updateBg = function() {
@@ -214,6 +215,10 @@ var updateBg = function() {
 		bgX2 = 900;
 	}
 };
+
+var updatePoints = function() {
+	points = points + 1;
+}
 
 var collisionDetection = function() { //muokkaa törmäystestit toimiviksi!!!!!
 	for (var i = 0; i <  obstacle.length; i++) {
@@ -312,7 +317,12 @@ var updateKeys = function() {
 			player.removeKey("key4");
 		}
 
-		if (!player.hasKeys()) makeKey;
+		if (key1Time > 22000 
+			&& key2Time > 22000 
+			&& key3Time > 22000 
+			&& key4Time > 22000) {
+				makeKey;
+		}
 		
 		keyAdded = true;
 
