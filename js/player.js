@@ -24,21 +24,33 @@ Player.prototype.createKeys = function() {
 Player.prototype.addKey = function(id) {
 	if (id == "key1") {
 		this.keys.key1 = true;
+		for (var i = 0; i < obstacle.length; i++) {
+			if (obstacle[i].type == 1) obstacle[i].greyed = true;
+		}
 		key1Time = new Date().getTime();
 		points = points + 1000;
 	}
 	else if (id == "key2") {
 		this.keys.key2 = true;
+		for (var i = 0; i < obstacle.length; i++) {
+			if (obstacle[i].type == 2) obstacle[i].greyed = true;
+		}
 		key2Time = new Date().getTime();
 		points = points + 1000;
 	}
 	else if (id == "key3") {
 		this.keys.key3 = true;
+		for (var i = 0; i < obstacle.length; i++) {
+			if (obstacle[i].type == 3) obstacle[i].greyed = true;
+		}
 		key3Time = new Date().getTime();
 		points = points + 1000;
 	}
 	else if (id == "key4") {
 		this.keys.key4 = true;
+		for (var i = 0; i < obstacle.length; i++) {
+			if (obstacle[i].type == 4) obstacle[i].greyed = true;
+		}
 		key4Time = new Date().getTime();
 		points = points + 1000;
 	}
