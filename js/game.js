@@ -190,33 +190,40 @@ var updateBg = function() {
 var collisionDetection = function() { //muokkaa törmäystestit toimiviksi!!!!!
 	for (var i = 0; i <  obstacle.length; i++) {
 		if (obstacle[i].greyed == false) {		// jotta "harmaana" olevista esteistä pääsee läpi, testattu ja toimii
+			
+
+					
 			if (obstacle[i].x < player.x + player.width  && obstacle[i].x + obstacle[i].width  > player.x &&
 					obstacle[i].y < player.y + player.height && obstacle[i].y + obstacle[i].height > player.y) {
 				
 				if (player.isMoving == false) { //jos pelaaja ei liiku
 					player.x = obstacle[i].x - player.width;
+					console.log("Törmäys liikkumatta");
 				}
 				else if (player.direction == "right" && obstacle[i].x > player.x) { //jos pelaaja yrittää mennä oikealle JA este on oikealla
 					player.x = obstacle[i].x - player.width;
+					console.log("Törmäys oikealla");
 				}
 				else if (player.direction == "left" && obstacle[i].x < player.x) { //jos pelaaja yrittää mennä vasemmalle JA este on vasemmalla
 					player.x = obstacle[i].x + obstacle[i].width;
-				}
-				else if (player.direction == "up" && obstacle[i].y < player.y) { //jos pelaaja yrittää mennä ylös JA este on yläpuolella
-					player.y = obstacle[i].y + obstacle[i].height;
-				}
-				else if (player.direction == "down" && obstacle[i].y > player.y) { //jos pelaaja yrittää mennä alas JA este on alapuolella
-					player.y = obstacle[i].y - player.height;
+					console.log("Törmäys vasemmalla");
 				}
 				else if (player.direction == "up" && obstacle[i].x > player.x) { //jos pelaaja yrittää mennä ylös JA este on oikealla
 					player.x = obstacle[i].x - player.width;
-					
+					console.log("Törmäys oikealla, liike ylös");
 				}
 				else if (player.direction == "down" && obstacle[i].x > player.x) { //jos pelaaja yrittää mennä alas JA este on oikealla
 					player.x = obstacle[i].x - player.width;
+					console.log("Törmäys oikealla, liike alas");
 				}
-
-				console.log("Törmäys!");
+				else if (player.direction == "up" && obstacle[i].y < player.y) { //jos pelaaja yrittää mennä ylös JA este on yläpuolella
+					player.y = obstacle[i].y + obstacle[i].height;
+					console.log("Törmäys ylhäällä");
+				}
+				else if (player.direction == "down" && obstacle[i].y > player.y) { //jos pelaaja yrittää mennä alas JA este on alapuolella
+					player.y = obstacle[i].y - player.height;
+					console.log("Törmäys alhaalla");
+				}
 			}
 		}
 	}

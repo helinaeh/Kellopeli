@@ -54,6 +54,7 @@ Player.prototype.move = function(canvas) {
 	}
 	else {
 		this.frameY = 0;
+		//console.log("ei liikutakaan, isMoving = false");
 	}
 };
 
