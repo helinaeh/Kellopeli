@@ -1,4 +1,5 @@
 var canvas, ctx, bgImage, player, playerImg, obstacle, carImg, garImg, homeImg, workImg, delta;
+var carKey, garageKey, homeKey, workKey, watchImg;
 var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900;
 var spriteSpeed = 500, sumOfDelta = 0, lastCalledTime = new Date().getTime();
 
@@ -68,7 +69,17 @@ var randomiseObstacles = function() {
 var createKeys = function() {
 	keyArray = new Array();
 	carKey = getImage("images/carkey.png");
-	keyArray[0] = new Key(200, 1);
+	garageKey = getImage("images/garagekey.png");
+	homeKey = getImage("images/homekey.png");
+	workKey = getImage("images/workkey.png");
+	watchImg = getImage("images/watch.png");
+	randomiseKeys();
+};
+
+var randomiseKeys = function() {
+	keyArray[0] = new Key(200, "key1");
+	keyArray[1] = new Key(300, "key2");
+	keyArray[2] = new Key(400, "key3");
 };
 
 var addEventListeners = function() {
@@ -143,7 +154,6 @@ var render = function() {
 	ctx.drawImage(bgImage, 0, 0, 900, 625, bgX2, 0, canvas.width, canvas.height);
 	ctx.drawImage(playerImg, player.frameX*playerSpriteX, player.frameY*playerSpriteY, playerSpriteX, playerSpriteY, player.x, player.y, playerSpriteX, playerSpriteY);
 	for (var i = 0; i < obstacle.length; i++) {
-		//console.log(i);
 		if (obstacle[i].type == 1) {
 			ctx.drawImage(carImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 		}
@@ -160,20 +170,38 @@ var render = function() {
 			ctx.drawImage(wallImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 		}
 	}
+	for (var i = 0; i < keyArray.length; i++) {
+		if (keyArray[i].id == "key1") {
+			ctx.drawImage(carKey, 0, 0, 35, 35, keyArray[i].x, keyArray[i].y, 35, 35);
+		}
+		else if (keyArray[i].id == "key2") {
+			ctx.drawImage(garageKey, 0, 0, 35, 35, keyArray[i].x, keyArray[i].y, 35, 35);
+		}
+		else if (keyArray[i].id == "key3") {
+			ctx.drawImage(homeKey, 0, 0, 35, 35, keyArray[i].x, keyArray[i].y, 35, 35);
+		}
+		else if (keyArray[i].id == "key4") {
+			ctx.drawImage(workKey, 0, 0, 35, 35, keyArray[i].x, keyArray[i].y, 35, 35);
+		}
+		else if (keyArray[i].id == "watch") {
+			ctx.drawImage(watchImg, 0, 0, 35, 35, keyArray[i].x, keyArray[i].y, 35, 35);
+		}
+	}
 };
 
 var update = function() {
 	updateBg();
 	player.move(canvas);
 	for (var i = 0; i < obstacle.length; i++) {
-		//console.log("este nro " + i, obstacle[i]);
-
 		obstacle[i].move(canvas);
+	}
+	for (var i = 0; i < keyArray.length; i++) {
+		keyArray[i].move(canvas);
 	}
 	collisionDetection();
 	updateSprite();
+	//updateKeys();
 	updateObstacleWall();
-	updateKeys();
 };
 
 var updateBg = function() {
