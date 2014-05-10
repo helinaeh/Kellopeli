@@ -241,12 +241,12 @@ var span = 0;
 var keyAdded = false;
 
 var updateObstacleWall = function() {
-	//console.log("menee updateObstacleWalliin");
 	thisTime = new Date().getTime();
+
 	span = thisTime - lastTime;
+
 	if (span > 4000) {
-		createObstacleWall(player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
-		//console.log("menee iffiin");
+		createObstacleWall(800, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
 		lastTime = thisTime;
 	}
 }
@@ -280,7 +280,7 @@ var makeKey = function() {
 	}
 }
 
-var createObstacleWall = function(position, car, hom, gar, wor) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
+var createObstacleWall = function(x, car, hom, gar, wor) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
 
 
 	a = 0; // +1 kun lisätään seinämään este
@@ -293,9 +293,9 @@ var createObstacleWall = function(position, car, hom, gar, wor) { // Parametrit 
 
 	addHole();
 
-	addObstacles(car, hom, gar, wor);
+	addObstacles(x, car, hom, gar, wor);
 
-	addWalls();
+	addWalls(x);
 
 	count = count + 1;
 }
@@ -303,17 +303,18 @@ var createObstacleWall = function(position, car, hom, gar, wor) { // Parametrit 
 var addHole = function() {
 	var position = Math.round(Math.random() * 12);
 	var holeSize = 3;
-	var x = 0;
+	var p = 0;
+
 	if (count > 80 && Math.random() < 0.01) return;
+
 	do {
 		yArray.push(position);
 		position = position + 1;
-		x = x + 1;
-	} while (x < holeSize - Math.round(Math.random() - 0.4) - Math.floor(count / 25));
-	//console.log("kolo lisätty");
+		p = p + 1;
+	} while (p < holeSize - Math.round(Math.random() - 0.4) - Math.floor(count / 25));
 }
 
-var addObstacles = function(car, hom, gar, wor) {
+var addObstacles = function(x, car, hom, gar, wor) {
 
 	var position = 0;
 
@@ -321,7 +322,7 @@ var addObstacles = function(car, hom, gar, wor) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(4);
 			if (position != -1) {
-				obstacle.push(new Work(position * 35, wor));
+				obstacle.push(new Work(x, position * 35, wor));
 				yArray.push(position, position+1, position+2, position+3); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 				break;
@@ -333,7 +334,7 @@ var addObstacles = function(car, hom, gar, wor) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(3);
 			if (position != -1) {
-				obstacle.push(new Home(position * 35, hom));
+				obstacle.push(new Home(x, position * 35, hom));
 				yArray.push(position, position+1, position+2); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 				break;
@@ -345,7 +346,7 @@ var addObstacles = function(car, hom, gar, wor) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(2);
 			if (position != -1) {
-				obstacle.push(new Garage(position * 35, gar));
+				obstacle.push(new Garage(x, position * 35, gar));
 				yArray.push(position, position+1); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 				break;
@@ -358,7 +359,7 @@ var addObstacles = function(car, hom, gar, wor) {
 			position = randomPosition(1);
 			if (position != -1) {
 				//console.log(position);
-				obstacle.push(new Car(position * 35, car));
+				obstacle.push(new Car(x, position * 35, car));
 				yArray.push(position); //äsken lisätyn esteen "indeksit" (kts. ylempää)
 				a = a + 1; // turha??
 				break;
@@ -367,10 +368,10 @@ var addObstacles = function(car, hom, gar, wor) {
 	}
 }
 
-var addWalls = function() {
+var addWalls = function(x) {
 	for (var h = 0; h < 15; h++) { // käy läpi indeksit
 		if (yArray.indexOf(h) == -1) {
-			obstacle.push(new Wall(h*35));
+			obstacle.push(new Wall(x, h*35));
 		} // lisää seinän (joka on 35px korkea)
 	}
 }
@@ -393,7 +394,7 @@ var isEmpty = function(position, height) {
 	var res = true;
 
 	for (var i = position; i < position + height; i++) {
-		if (yArray.indexOf(i) != -1 && i > 15) res = false;
+		if (yArray.indexOf(i) != -1 || i > 15) res = false;
 	}
 
 	return res;

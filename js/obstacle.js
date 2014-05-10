@@ -1,5 +1,5 @@
-function Obstacle(y, spriteSrc, type, height, greyed) {
-	this.x = 800; //este luodaan pelinäkymän ulkopuolelle, kohtaan 900
+function Obstacle(x, y, spriteSrc, type, height, greyed) {
+	this.x = x; //este luodaan pelinäkymän ulkopuolelle, kohtaan 900
 	this.y = y;
 	this.width = 35;
 	this.height = height;
