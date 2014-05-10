@@ -316,13 +316,13 @@ var update = function() {
 };
 
 var updateBg = function() {
-	bgX1 -= speed * 1.5;
+	bgX1 -= speed * 1;
 	if (bgX1 <= -900) {
-		bgX1 = 870;
+		bgX1 = 890;
 	}
-	bgX2 -= speed * 1.5;
+	bgX2 -= speed * 1;
 	if (bgX2 <= -900) {
-		bgX2 = 870;
+		bgX2 = 890;
 	}
 };
 
