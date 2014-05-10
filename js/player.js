@@ -75,13 +75,13 @@ Player.prototype.removeKey = function(id) {
 	else if (id == "key2") {
 		this.keys.key2 = false;
 		for (var i = 0; i < obstacle.length; i++) {
-			if (obstacle[i].type == 2) obstacle[i].greyed = false;
+			if (obstacle[i].type == 3) obstacle[i].greyed = false;
 		}
 	}
 	else if (id == "key3") {
 		this.keys.key3 = false;
 		for (var i = 0; i < obstacle.length; i++) {
-			if (obstacle[i].type == 3) obstacle[i].greyed = false;
+			if (obstacle[i].type == 2) obstacle[i].greyed = false;
 		}
 	}
 	else if (id == "key4") {
