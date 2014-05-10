@@ -277,11 +277,18 @@ var collisionDetection = function() {
 		}
 	}
 
-	for (i = 0; i < keyArray.length; i++) {
-		if (true) {};
-	};
+	collectKey();
 };
 
+var collectKey = function() {
+	for (i = 0; i <keyArray.length; i++) {
+		if (keyArray[i].x < player.x + player.width && keyArray[i].x + 35 > player.x &&
+			keyArray[i].y < player.y + player.height && keyArray[i].y + 35 > player.y) {
+				player.addKey(keyArray[i].id);
+				keyArray.splice(i, 1);
+		}
+	};
+}
 
 var updateSprite = function() {
 	if (sumOfDelta >= spriteSpeed) {
