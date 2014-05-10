@@ -199,13 +199,10 @@ var collisionDetection = function() { //muokkaa törmäystestit toimiviksi!!!!!
 			}
 			else if (player.direction == "up" && obstacle[i].x > player.x) { //jos pelaaja yrittää mennä ylös JA este on oikealla
 				player.x = obstacle[i].x - player.width;
-				//player.y = obstacle[i].y + obstacle[i].height;
-				//player.moveUp();
+				
 			}
 			else if (player.direction == "down" && obstacle[i].x > player.x) { //jos pelaaja yrittää mennä alas JA este on oikealla
 				player.x = obstacle[i].x - player.width;
-				//player.y = obstacle[i].y - player.height;
-				//player.moveDown();
 			}
 
 			console.log("Törmäys!");
