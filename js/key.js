@@ -1,6 +1,5 @@
-function Key(id, position) {
+function Key(y, id) {
 	this.id = id;
-	var spriteSrc = route;
+	this.x = 900;
+	this.y = y;
 }
-
-var route = "images/" + id + ".png"; //hakee oikean sourcekuvan id:n perusteella
