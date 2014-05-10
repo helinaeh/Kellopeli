@@ -8,6 +8,7 @@ var introSrc = "audio/intro.mp3";
 window.onload = function() {
 	format();
 	animate();
+	console.log("onload");
 };
 
 var format = function() {
@@ -19,6 +20,7 @@ var format = function() {
 	createButtons();
 	drawMenu();
 	addEventListeners();
+	console.log("format");
 };
 
 var setCanvas = function() {
@@ -54,6 +56,7 @@ var createPlayer = function() {
 	//playerImg = player.getImage(player.spriteSrc); //getImage käyttäen playerin omaa metodia
 	playerImg = getImage("images/playersprite.png");
 	player.createKeys();
+	console.log("player.x:" + player.x);
 };
 
 var createObstacles = function() {
@@ -64,9 +67,11 @@ var createObstacles = function() {
 	workImg = getImage("images/worksprite.png");
 	wallImg = getImage("images/wallsprite.png");
 	//randomiseObstacles();
-	createObstacleWall(900, false, false, false, false);
-	createObstacleWall(650, false, false, false, false);
-	createObstacleWall(400, false, false, false, false);
+	obstacle = [];
+	//createObstacleWall(900, false, false, false, false);
+	//createObstacleWall(650, false, false, false, false);
+	//createObstacleWall(400, false, false, false, false);
+	console.log("createObstacles");
 };
 
 /*
@@ -131,6 +136,7 @@ var drawMenu = function() {
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "30px Georgia";
 	ctx.fillText(points, 110, 80);
+	console.log("drawMenu");
 };
 
 var addEventListeners = function() {
@@ -179,6 +185,9 @@ var addEventListeners = function() {
 		//clicking on start button
 		if (start.click(e)) {
 			//peli alkaa
+			points = 0;
+			pointSpeed = 100;
+			format();
 			paused = false;
 			soundEfx.play();
 		}
@@ -201,6 +210,7 @@ var animate = function() {
 		requestId = window.requestAnimationFrame(animate);	
 	}, 3000);
 	*/
+	console.log("animate: paused: " + paused);
 };
 
 var timer = function() {
@@ -328,6 +338,7 @@ var update = function() {
 	updateObstacleWall();
 	updatePoints();
 	updateSpeed();
+	console.log("update");
 };
 
 var updateBg = function() {
@@ -435,11 +446,18 @@ var updateSpeed = function() {
 	}
 }
 
+var formatCounts = function() {
+	count = 0;
+	speed = 2;
+}
+
 var isGameOver = function() {
 	if (player.x < 0) { //jos pelaaja on pelilaudan ulkopuolella (vasemmalla)
 		paused = true;
 		createButtons();
 		drawMenu();
+		format();
+		formatCounts();
 	}
 };
 
@@ -464,6 +482,7 @@ var updateObstacleWall = function() {
 		createObstacleWall(900, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
 		lastTime = thisTime;
 	}
+	console.log("updateObstacleWall");
 }
 
 var updateKeys = function() {
