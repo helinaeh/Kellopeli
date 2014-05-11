@@ -2,8 +2,9 @@ var canvas, ctx, bgImage, player, playerImg, obstacle, carImg, garImg, homeImg, 
 var carKey, garageKey, homeKey, workKey, watchImg, logo;
 var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900, points = 0, paused = true, speed = 2, speedTime = new Date().getTime();
 var spriteSpeed = 500, pointSpeed = 100, sumOfDelta = 0, sumOfPoints = 0, lastCalledTime = new Date().getTime();
-var intro, theme, menu;
+var intro, theme, menu, blip, laugh, obsoff;
 var introSrc = "audio/intro.mp3", themeSrc = "audio/theme.mp3", menuSrc = "audio/menu.mp3";
+var blipSrc = "audio/blip.mp3", laughSrc = "audio/laugh.mp3", obsoffSrc = "audio/obsoff.mp3";
 var now = 0, seconds = null;
 
 //POISTA KAIKKI TURHAT CONSOLE.LOGIT!!!!
@@ -424,9 +425,16 @@ var obsCollision = function() {
 var collectKey = function() {
 	for (i = 0; i <keyArray.length; i++) {
 		if (keyArray[i].x < player.x + player.width && keyArray[i].x + 35 > player.x &&
-			keyArray[i].y < player.y + player.height && keyArray[i].y + 35 > player.y) {
-				player.addKey(keyArray[i].id);
-				keyArray.splice(i, 1);
+				keyArray[i].y < player.y + player.height && keyArray[i].y + 35 > player.y) {
+			if (keyArray[i].id == "watch") {
+				laugh.play();
+			}
+			else {
+				blip.play();
+			}
+				
+			player.addKey(keyArray[i].id);
+			keyArray.splice(i, 1);
 		}
 	}
 };
@@ -516,12 +524,16 @@ var updateKeys = function() {
 	if (span > 2000 / speed && keyAdded == false) {
 
 		if (player.keys.key1 == true && new Date().getTime() > key1Time + 32000 / speed) {
+			obsoff.play();
 			player.removeKey("key1");
 		} else if (player.keys.key2 == true && new Date().getTime() > key2Time + 32000 / speed) {
+			obsoff.play();
 			player.removeKey("key2");
 		} else if (player.keys.key3 == true && new Date().getTime() > key3Time + 32000 / speed) {
+			obsoff.play();
 			player.removeKey("key3");
 		} else if (player.keys.key4 == true && new Date().getTime() > key4Time + 32000 / speed) {
+			obsoff.play();
 			player.removeKey("key4");
 		}
 
