@@ -55,6 +55,9 @@ var setSounds = function() {
 	intro = document.getElementById("intro");
 	theme = document.getElementById("theme");
 	menu = document.getElementById("menu");
+	blip = document.getElementById("blip");
+	laugh = document.getElementById("laugh");
+	obsoff = document.getElementById("obsoff");
 };
 
 var getImage = function(path) {
