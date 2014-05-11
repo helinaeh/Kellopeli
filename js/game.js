@@ -69,7 +69,7 @@ var createPlayer = function() {
 	player = new Player(100, canvas.height/2-playerSpriteY/2); //x = canvas.width/2-playerSpriteX/2, jos pelaaja piirretään keskelle kenttää
 	playerImg = getImage("images/playersprite.png");
 	player.createKeys();
-	console.log("player.x:" + player.x);
+	//console.log("player.x:" + player.x);
 };
 
 var createObstacles = function() {
@@ -593,7 +593,7 @@ var makeKey = function() {
 		keyArray.push(new Key(randomKeyPosition(), "key1", speed));
 		lastKeyMade = new Date().getTime();
 		
-		console.log(keyArray[0]);
+		//console.log(keyArray[0]);
 		
 		return;
 	}
