@@ -12,7 +12,7 @@ header {
 }
 
 #game {
-	background-color: pink;
+	background-color: #cbb9af; /*#0c487c*/
 	display: block;
     margin-right: auto;
     margin-left: auto;

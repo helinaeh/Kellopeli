@@ -19,7 +19,7 @@ Player.prototype.createKeys = function() {
 	this.keys.key2 = false;
 	this.keys.key3 = false;
 	this.keys.key4 = false;
-	console.log(this.keys);
+	//console.log(this.keys);
 };
 
 Player.prototype.addKey = function(id) {

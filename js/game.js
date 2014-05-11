@@ -1,27 +1,18 @@
 var canvas, ctx, bgImage, player, playerImg, obstacle, carImg, garImg, homeImg, workImg, delta;
-var carKey, garageKey, homeKey, workKey, watchImg, logo;
+var carKey, garageKey, homeKey, workKey, watchImg, logo, start, startText;
 var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900, points = 0, paused = true, speed = 2, speedTime = new Date().getTime();
 var spriteSpeed = 500, pointSpeed = 100, sumOfDelta = 0, sumOfPoints = 0, lastCalledTime = new Date().getTime();
-var intro, theme, menu, blip, laugh, obsoff;
+var intro, theme, menu, blip, laugh, obsoff, buttonImg;
 var introSrc = "audio/intro.mp3", themeSrc = "audio/theme.mp3", menuSrc = "audio/menu.mp3";
 var blipSrc = "audio/blip.mp3", laughSrc = "audio/laugh.mp3", obsoffSrc = "audio/obsoff.mp3";
-var now = 0, seconds = null;
+var now = 0, seconds = null, startTextX = 393, startTextY = 425;
 
 //POISTA KAIKKI TURHAT CONSOLE.LOGIT!!!!
-
-/*
-var getCurTime = function(audio) { //audio = document.getElementById-juttu
-	alert(audio.currentTime);
-} 
-var setCurTime = function(audio) { 
-	audio.currentTime=5;
-} 
-*/
 
 window.onload = function() {
 	format();
 	animate();
-	console.log("onload");
+	//console.log("onload");
 };
 
 var format = function() {
@@ -33,7 +24,7 @@ var format = function() {
 		createButtons();
 		drawMenu();
 		addEventListeners();
-		console.log("format");
+		//console.log("format");
 	});
 };
 
@@ -49,6 +40,7 @@ var setCanvas = function(callback) {
 
 var setBackground = function() {
 	bgImage = getImage("images/background.png");
+	buttonImg = getImage("images/button.png");
 }
 
 var setSounds = function() {
@@ -58,6 +50,8 @@ var setSounds = function() {
 	blip = document.getElementById("blip");
 	laugh = document.getElementById("laugh");
 	obsoff = document.getElementById("obsoff");
+	theme.loop = true;
+	menu.loop = true;
 };
 
 var getImage = function(path) {
@@ -73,7 +67,6 @@ var getImage = function(path) {
 
 var createPlayer = function() {
 	player = new Player(100, canvas.height/2-playerSpriteY/2); //x = canvas.width/2-playerSpriteX/2, jos pelaaja piirretään keskelle kenttää
-	//playerImg = player.getImage(player.spriteSrc); //getImage käyttäen playerin omaa metodia
 	playerImg = getImage("images/playersprite.png");
 	player.createKeys();
 	console.log("player.x:" + player.x);
@@ -88,10 +81,7 @@ var createObstacles = function() {
 	wallImg = getImage("images/wallsprite.png");
 	//randomiseObstacles();
 	obstacle = [];
-	//createObstacleWall(900, false, false, false, false);
-	//createObstacleWall(650, false, false, false, false);
-	//createObstacleWall(400, false, false, false, false);
-	console.log("createObstacles");
+	//console.log("createObstacles");
 };
 
 /*
@@ -148,15 +138,21 @@ var createButtons = function() {
 }
 
 var drawMenu = function() {
+	//background
 	ctx.drawImage(bgImage, 0, 0, 900, 625, 0, 0, canvas.width, canvas.height);
+	//score
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "18px Georgia";
 	ctx.fillText("SCORE", 110, 50);
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "30px Georgia";
 	ctx.fillText(points, 110, 80);
+	//start text
+	ctx.fillStyle = "#0c487c";
+	ctx.font = "35px Georgia";
+	ctx.fillText(startText, startTextX, startTextY);
 	menu.play();
-	console.log("menu musiikki, " + menu);
+	console.log("menun piirtäminen tehty");
 };
 
 var addEventListeners = function() {
@@ -204,25 +200,34 @@ var addEventListeners = function() {
 	window.addEventListener("click", function(e) {
 		//clicking on start button
 		if (start.click(e)) {
-			//peli alkaa
-			points = 0;
-			pointSpeed = 100;
-			//format();
-			paused = false;
-			menu.pause();
-			intro.play();
-			intro.addEventListener("timeupdate", function() {
-				now = parseInt(intro.currentTime);
-				if (now === 4) {
-					theme.play();
-				}
-			}, false);
+			if (startText == "START") {
+				//peli alkaa
+				console.log("START klikattu");
+				points = 0;
+				pointSpeed = 100;
+				paused = false;
+				menu.pause();
+				intro.play();
+				intro.addEventListener("timeupdate", function() {
+					now = parseInt(intro.currentTime);
+					if (now === 4) {
+						theme.play();
+					}
+				}, false);
+			}
+
+			//clicking on menu button
+			else if (startText == "MENU") {
+				console.log("MENU klikattu");
+				startText = "START";
+				formatMenu();
+			}
 		}
+
+
 	}, false);
 	
 };
-
-
 
 var animate = function() {
 	if (!paused) {
@@ -239,7 +244,6 @@ var animate = function() {
 		requestId = window.requestAnimationFrame(animate);	
 	}, 3000);
 	*/
-	console.log("animate: paused: " + paused);
 };
 
 var timer = function() {
@@ -254,6 +258,10 @@ var clear = function() {
 };
 
 var render = function() {
+
+	//background fix
+	ctx.fillStyle = "#0c487c";
+	ctx.fillRect(0, 0, 900, 100);
 
 	//background
 	ctx.drawImage(bgImage, 0, 625, 900, 625, bgX1, 0, canvas.width, canvas.height);
@@ -367,17 +375,17 @@ var update = function() {
 	updateObstacleWall();
 	updatePoints();
 	updateSpeed();
-	console.log("update");
+	//console.log("update");
 };
 
 var updateBg = function() {
 	bgX1 -= speed * 1;
 	if (bgX1 <= -900) {
-		bgX1 = 890;
+		bgX1 = 900;
 	}
 	bgX2 -= speed * 1;
 	if (bgX2 <= -900) {
-		bgX2 = 890;
+		bgX2 = 900;
 	}
 };
 
@@ -388,37 +396,37 @@ var collisionDetection = function() {
 
 var obsCollision = function() {
 	for (var i = 0; i <  obstacle.length; i++) {
-		if (obstacle[i].greyed == false) {		// jotta "harmaana" olevista esteistä pääsee läpi, testattu ja toimii		
+		if (obstacle[i].greyed == false) {		// jotta "harmaana" olevista esteistä pääsee läpi, testattu ja toimii
 			if (obstacle[i].x < player.x + player.width  && obstacle[i].x + obstacle[i].width  > player.x &&
 					obstacle[i].y < player.y + player.height && obstacle[i].y + obstacle[i].height > player.y) {
 				
 				if (player.isMoving == false) { //jos pelaaja ei liiku
 					player.x = obstacle[i].x - player.width;
-					console.log("Törmäys liikkumatta");
+					//console.log("Törmäys liikkumatta");
 				}
 				else if (player.direction == "right" && obstacle[i].x > player.x) { //jos pelaaja yrittää mennä oikealle JA este on oikealla
 					player.x = obstacle[i].x - player.width;
-					console.log("Törmäys oikealla");
+					//console.log("Törmäys oikealla");
 				}
 				else if (player.direction == "left" && obstacle[i].x < player.x) { //jos pelaaja yrittää mennä vasemmalle JA este on vasemmalla
 					player.x = obstacle[i].x + obstacle[i].width;
-					console.log("Törmäys vasemmalla");
+					//console.log("Törmäys vasemmalla");
 				}
 				else if (player.direction == "up" && obstacle[i].x > player.x) { //jos pelaaja yrittää mennä ylös JA este on oikealla
 					player.x = obstacle[i].x - player.width;
-					console.log("Törmäys oikealla, liike ylös");
+					//console.log("Törmäys oikealla, liike ylös");
 				}
 				else if (player.direction == "down" && obstacle[i].x > player.x) { //jos pelaaja yrittää mennä alas JA este on oikealla
 					player.x = obstacle[i].x - player.width;
-					console.log("Törmäys oikealla, liike alas");
+					//console.log("Törmäys oikealla, liike alas");
 				}
 				else if (player.direction == "up" && obstacle[i].y < player.y) { //jos pelaaja yrittää mennä ylös JA este on yläpuolella
 					player.y = obstacle[i].y + obstacle[i].height;
-					console.log("Törmäys ylhäällä");
+					//console.log("Törmäys ylhäällä");
 				}
 				else if (player.direction == "down" && obstacle[i].y > player.y) { //jos pelaaja yrittää mennä alas JA este on alapuolella
 					player.y = obstacle[i].y - player.height;
-					console.log("Törmäys alhaalla");
+					//console.log("Törmäys alhaalla");
 				}
 			}
 		}
@@ -464,8 +472,6 @@ var updatePoints = function() {
 var updateSpeed = function() {
 	if (new Date().getTime() - speedTime > 7000 && speed <= 5) {
 
-		console.log(speed);
-
 		speed *= 1.1;
 		player.speed += 0.1;
 		pointSpeed -= 5;
@@ -480,22 +486,50 @@ var updateSpeed = function() {
 			keyArray[i].speed = speed;
 		}
 	}
-}
+
+	//console.log(speed);
+};
+
+var drawYouLostWindow = function() {
+	//draw a box for the text
+	ctx.fillStyle = "#0c487c";
+	ctx.fillRect(300, 250, 300, 225); //sijainti, korkus
+
+	//draw alert text about game ending
+	ctx.fillStyle = "rgb(255, 255, 255)";
+	ctx.font = "30px Georgia";
+	ctx.fillText("GAME OVER", 360, 330);
+
+	//draw menu button
+	ctx.drawImage(buttonImg, 0, 0, 251, 75, 324, 375, 251, 75);
+	ctx.fillStyle = "#0c487c";
+	ctx.font = "30px Georgia";
+	startText = "MENU";
+	ctx.fillText(startText, 400, 425);
+};
+
+var formatMenu = function() {
+	startText = "START";
+	createButtons();
+	format();
+	formatCounts();
+	drawMenu();
+	console.log("menu");
+};
 
 var formatCounts = function() {
 	count = 0;
 	speed = 2;
-}
+};
 
 var isGameOver = function() {
-	if (player.x < 0) { //jos pelaaja on pelilaudan ulkopuolella (vasemmalla)
+	if (player.x + player.width < 0) {
 		paused = true;
 		intro.pause();
 		theme.pause();
-		createButtons();
-		drawMenu();
-		format();
-		formatCounts();
+		//drawYouLostWindow();
+		console.log("hävisit pelin");
+		formatMenu();
 	}
 };
 
@@ -520,7 +554,7 @@ var updateObstacleWall = function() {
 		createObstacleWall(900, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
 		lastTime = thisTime;
 	}
-	console.log("updateObstacleWall");
+	//console.log("updateObstacleWall");
 }
 
 var updateKeys = function() {
@@ -555,7 +589,7 @@ var updateKeys = function() {
 
 var makeKey = function() {
 
-	if (Math.random() < 0.2 && count > 2) { // VÄÄRÄT ARVOT !!!
+	if (Math.random() < 0.2 && count > 2) {
 		keyArray.push(new Key(randomKeyPosition(), "key1", speed));
 		lastKeyMade = new Date().getTime();
 		
