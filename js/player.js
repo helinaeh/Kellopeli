@@ -127,7 +127,7 @@ Player.prototype.move = function(canvas) {
 Player.prototype.moveUp = function() {
 	if (this.y > 100) {
 		this.y -= this.speed;
-		this.frameY = 2;
+		//this.frameY = 2;
 	}
 	else {
 		this.y = 100;
@@ -148,7 +148,7 @@ Player.prototype.moveUp = function() {
 Player.prototype.moveRight = function() {
 	if (this.x < canvas.width - this.width - 200) {
 		this.x += this.speed;
-		this.frameY = 4;
+		//this.frameY = 0;
 	}
 	else {
 		this.x = canvas.width - this.width - 200;
@@ -158,7 +158,7 @@ Player.prototype.moveRight = function() {
 Player.prototype.moveDown = function() {
 	if (this.y < canvas.height - this.height) {
 		this.y += this.speed;
-		this.frameY = 1;
+		//this.frameY = 1;
 	}
 	else {
 		this.y = canvas.height - this.height;

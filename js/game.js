@@ -10,32 +10,33 @@ var now = 0, seconds = null, startTextX = 393, startTextY = 425;
 //POISTA KAIKKI TURHAT CONSOLE.LOGIT!!!!
 
 window.onload = function() {
+	setCanvas();
 	format();
 	animate();
 	//console.log("onload");
 };
 
 var format = function() {
-	setCanvas(function() {
-		createPlayer();
-		createObstacles();
-		createKeys();
-		createMenu();
-		createButtons();
-		drawMenu();
-		addEventListeners();
-		//console.log("format");
-	});
+	
+	createPlayer();
+	createObstacles();
+	createKeys();
+	createMenu();
+		
+	drawMenu();
+	addEventListeners();
+	//console.log("format");
+	
 };
 
-var setCanvas = function(callback) {
+var setCanvas = function() {
 	canvas = document.getElementById("game");
 	ctx = canvas.getContext("2d");
 	canvas.width = 900;
 	canvas.height = 625;
 	setBackground();
 	setSounds();
-	callback();
+	createButtons();
 };
 
 var setBackground = function() {
@@ -135,6 +136,7 @@ Button.prototype.click = function(event) {
 var createButtons = function() {
 	start = new Button(324, 575, 375, 450);
 	startText = "START";
+	console.log("Napin luominen");
 }
 
 var drawMenu = function() {
@@ -279,26 +281,26 @@ var render = function() {
 		}
 		else if (obstacle[i].type == 2) {
 			if (obstacle[i].greyed == false) {
-				ctx.drawImage(garImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+				ctx.drawImage(garImg, 0, 0, 35, 70, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 			}
 			else {
-				ctx.drawImage(garImg, 35, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+				ctx.drawImage(garImg, 35, 0, 35, 70, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 			}
 		}
 		else if (obstacle[i].type == 3) {
 			if (obstacle[i].greyed == false) {
-				ctx.drawImage(homeImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+				ctx.drawImage(homeImg, 0, 0, 35, 105, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 			}
 			else {
-				ctx.drawImage(homeImg, 35, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+				ctx.drawImage(homeImg, 35, 0, 35, 105, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 			}
 		}
 		else if (obstacle[i].type == 4) {
 			if (obstacle[i].greyed == false) {
-				ctx.drawImage(workImg, 0, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+				ctx.drawImage(workImg, 0, 0, 35, 140, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 			}
 			else {
-				ctx.drawImage(workImg, 35, 0, 35, 35, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
+				ctx.drawImage(workImg, 35, 0, 35, 140, obstacle[i].x, obstacle[i].y, obstacle[i].width, obstacle[i].height);
 			}
 		}
 		else if (obstacle[i].type == "wal") {
@@ -490,6 +492,7 @@ var updateSpeed = function() {
 	//console.log(speed);
 };
 
+/*
 var drawYouLostWindow = function() {
 	//draw a box for the text
 	ctx.fillStyle = "#0c487c";
@@ -507,13 +510,13 @@ var drawYouLostWindow = function() {
 	startText = "MENU";
 	ctx.fillText(startText, 400, 425);
 };
+*/
 
 var formatMenu = function() {
 	startText = "START";
-	createButtons();
 	format();
 	formatCounts();
-	drawMenu();
+
 	console.log("menu");
 };
 
@@ -530,6 +533,10 @@ var isGameOver = function() {
 		//drawYouLostWindow();
 		console.log("hävisit pelin");
 		formatMenu();
+		//draw alert text about game ending
+		ctx.fillStyle = "rgb(255, 255, 255)";
+		ctx.font = "30px Georgia";
+		ctx.fillText("GAME OVER", 360, 510);
 	}
 };
 
