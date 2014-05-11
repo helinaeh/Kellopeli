@@ -7,26 +7,19 @@ var introSrc = "audio/intro.mp3", themeSrc = "audio/theme.mp3", menuSrc = "audio
 var blipSrc = "audio/blip.mp3", laughSrc = "audio/laugh.mp3", obsoffSrc = "audio/obsoff.mp3";
 var now = 0, seconds = null, startTextX = 393, startTextY = 425;
 
-//POISTA KAIKKI TURHAT CONSOLE.LOGIT!!!!
-
 window.onload = function() {
-	setCanvas();
 	format();
 	animate();
-	//console.log("onload");
 };
 
 var format = function() {
-	
+	setCanvas();
 	createPlayer();
 	createObstacles();
 	createKeys();
 	createMenu();
-		
 	drawMenu();
-	addEventListeners();
-	//console.log("format");
-	
+	addEventListeners();	
 };
 
 var setCanvas = function() {
@@ -67,10 +60,9 @@ var getImage = function(path) {
 };
 
 var createPlayer = function() {
-	player = new Player(100, canvas.height/2-playerSpriteY/2); //x = canvas.width/2-playerSpriteX/2, jos pelaaja piirretään keskelle kenttää
+	player = new Player(100, canvas.height/2-playerSpriteY/2); //x = canvas.width/2-playerSpriteX/2
 	playerImg = getImage("images/playersprite.png");
 	player.createKeys();
-	//console.log("player.x:" + player.x);
 };
 
 var createObstacles = function() {
@@ -80,16 +72,7 @@ var createObstacles = function() {
 	homeImg = getImage("images/homesprite.png");
 	workImg = getImage("images/worksprite.png");
 	wallImg = getImage("images/wallsprite.png");
-	//randomiseObstacles();
-	obstacle = [];
-	//console.log("createObstacles");
 };
-
-/*
-var randomiseObstacles = function() {
-	obstacle[0] = new Car(200, false);
-};
-*/
 
 var createKeys = function() {
 	keyArray = new Array();
@@ -98,7 +81,6 @@ var createKeys = function() {
 	homeKey = getImage("images/garagekey.png");
 	workKey = getImage("images/workkey.png");
 	watchImg = getImage("images/watch.png");
-	//randomiseKeys();
 
 };
 
@@ -136,12 +118,12 @@ Button.prototype.click = function(event) {
 var createButtons = function() {
 	start = new Button(324, 575, 375, 450);
 	startText = "START";
-	console.log("Napin luominen");
 }
 
 var drawMenu = function() {
 	//background
 	ctx.drawImage(bgImage, 0, 0, 900, 625, 0, 0, canvas.width, canvas.height);
+
 	//score
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "18px Georgia";
@@ -149,12 +131,12 @@ var drawMenu = function() {
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "30px Georgia";
 	ctx.fillText(points, 110, 80);
+
 	//start text
 	ctx.fillStyle = "#0c487c";
 	ctx.font = "35px Georgia";
 	ctx.fillText(startText, startTextX, startTextY);
 	menu.play();
-	console.log("menun piirtäminen tehty");
 };
 
 var addEventListeners = function() {
@@ -203,8 +185,6 @@ var addEventListeners = function() {
 		//clicking on start button
 		if (start.click(e)) {
 			if (startText == "START") {
-				//peli alkaa
-				console.log("START klikattu");
 				points = 0;
 				pointSpeed = 100;
 				paused = false;
@@ -217,13 +197,13 @@ var addEventListeners = function() {
 					}
 				}, false);
 			}
-
+			/*
 			//clicking on menu button
 			else if (startText == "MENU") {
-				console.log("MENU klikattu");
 				startText = "START";
 				formatMenu();
 			}
+			*/
 		}
 
 
@@ -240,12 +220,6 @@ var animate = function() {
 		isGameOver();
 	}
 	requestId = window.requestAnimationFrame(animate);
-	
-	/*
-	window.setTimeout(function() {
-		requestId = window.requestAnimationFrame(animate);	
-	}, 3000);
-	*/
 };
 
 var timer = function() {
@@ -377,7 +351,6 @@ var update = function() {
 	updateObstacleWall();
 	updatePoints();
 	updateSpeed();
-	//console.log("update");
 };
 
 var updateBg = function() {
@@ -398,37 +371,30 @@ var collisionDetection = function() {
 
 var obsCollision = function() {
 	for (var i = 0; i <  obstacle.length; i++) {
-		if (obstacle[i].greyed == false) {		// jotta "harmaana" olevista esteistä pääsee läpi, testattu ja toimii
+		if (obstacle[i].greyed == false) {
 			if (obstacle[i].x < player.x + player.width  && obstacle[i].x + obstacle[i].width  > player.x &&
 					obstacle[i].y < player.y + player.height && obstacle[i].y + obstacle[i].height > player.y) {
 				
-				if (player.isMoving == false) { //jos pelaaja ei liiku
+				if (player.isMoving == false) {
 					player.x = obstacle[i].x - player.width;
-					//console.log("Törmäys liikkumatta");
 				}
-				else if (player.direction == "right" && obstacle[i].x > player.x) { //jos pelaaja yrittää mennä oikealle JA este on oikealla
+				else if (player.direction == "right" && obstacle[i].x > player.x) {
 					player.x = obstacle[i].x - player.width;
-					//console.log("Törmäys oikealla");
 				}
-				else if (player.direction == "left" && obstacle[i].x < player.x) { //jos pelaaja yrittää mennä vasemmalle JA este on vasemmalla
+				else if (player.direction == "left" && obstacle[i].x < player.x) {
 					player.x = obstacle[i].x + obstacle[i].width;
-					//console.log("Törmäys vasemmalla");
 				}
-				else if (player.direction == "up" && obstacle[i].x > player.x) { //jos pelaaja yrittää mennä ylös JA este on oikealla
+				else if (player.direction == "up" && obstacle[i].x > player.x) {
 					player.x = obstacle[i].x - player.width;
-					//console.log("Törmäys oikealla, liike ylös");
 				}
-				else if (player.direction == "down" && obstacle[i].x > player.x) { //jos pelaaja yrittää mennä alas JA este on oikealla
+				else if (player.direction == "down" && obstacle[i].x > player.x) {
 					player.x = obstacle[i].x - player.width;
-					//console.log("Törmäys oikealla, liike alas");
 				}
-				else if (player.direction == "up" && obstacle[i].y < player.y) { //jos pelaaja yrittää mennä ylös JA este on yläpuolella
+				else if (player.direction == "up" && obstacle[i].y < player.y) {
 					player.y = obstacle[i].y + obstacle[i].height;
-					//console.log("Törmäys ylhäällä");
 				}
-				else if (player.direction == "down" && obstacle[i].y > player.y) { //jos pelaaja yrittää mennä alas JA este on alapuolella
+				else if (player.direction == "down" && obstacle[i].y > player.y) {
 					player.y = obstacle[i].y - player.height;
-					//console.log("Törmäys alhaalla");
 				}
 			}
 		}
@@ -436,7 +402,7 @@ var obsCollision = function() {
 };
 
 var collectKey = function() {
-	for (i = 0; i <keyArray.length; i++) {
+	for (var i = 0; i <keyArray.length; i++) {
 		if (keyArray[i].x < player.x + player.width && keyArray[i].x + 35 > player.x &&
 				keyArray[i].y < player.y + player.height && keyArray[i].y + 35 > player.y) {
 			if (keyArray[i].id == "watch") {
@@ -445,7 +411,6 @@ var collectKey = function() {
 			else {
 				blip.play();
 			}
-				
 			player.addKey(keyArray[i].id);
 			keyArray.splice(i, 1);
 		}
@@ -473,7 +438,6 @@ var updatePoints = function() {
 
 var updateSpeed = function() {
 	if (new Date().getTime() - speedTime > 7000 && speed <= 5) {
-
 		speed *= 1.1;
 		player.speed += 0.1;
 		pointSpeed -= 5;
@@ -488,8 +452,6 @@ var updateSpeed = function() {
 			keyArray[i].speed = speed;
 		}
 	}
-
-	//console.log(speed);
 };
 
 /*
@@ -533,7 +495,6 @@ var isGameOver = function() {
 		//drawYouLostWindow();
 		console.log("hävisit pelin");
 		formatMenu();
-		//draw alert text about game ending
 		ctx.fillStyle = "rgb(255, 255, 255)";
 		ctx.font = "30px Georgia";
 		ctx.fillText("GAME OVER", 360, 510);
@@ -545,8 +506,8 @@ var isGameOver = function() {
 /* ALGORITMI */
 /*************/
 
-var count = 0; // +1 aina kun uusi seinämä tehdään
-var obsProp = 0.7; // todnäk jolla seinään tulee "avattava" este
+var count = 0;
+var obsProp = 0.7;
 var yArray = [];
 var a = 0, thisTime = new Date().getTime(), lastTime = thisTime, span = 0, keyAdded = false;
 var key1Time = new Date().getTime(), key2Time = new Date().getTime(), key3Time = new Date().getTime();
@@ -561,8 +522,7 @@ var updateObstacleWall = function() {
 		createObstacleWall(900, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
 		lastTime = thisTime;
 	}
-	//console.log("updateObstacleWall");
-}
+};
 
 var updateKeys = function() {
 	if (span > 2000 / speed && keyAdded == false) {
@@ -592,16 +552,13 @@ var updateKeys = function() {
 		keyAdded = true;
 
 	} else if (span < 2000 / speed && keyAdded == true) keyAdded = false;
-}
+};
 
 var makeKey = function() {
 
 	if (Math.random() < 0.2 && count > 2) {
 		keyArray.push(new Key(randomKeyPosition(), "key1", speed));
 		lastKeyMade = new Date().getTime();
-		
-		//console.log(keyArray[0]);
-		
 		return;
 	}
 
@@ -627,17 +584,13 @@ var makeKey = function() {
 		keyArray.push(new Key(randomKeyPosition(), "watch", speed));
 		lastKeyMade = new Date().getTime();
 	}
-}
+};
 
 var createObstacleWall = function(x, car, hom, gar, wor) { // Parametrit ovat true/false-arvoja sen mukaan onko pelaajalla kyseistä avainta
 
 
-	a = 0; // +1 kun lisätään seinämään este
-	/* 
-	Anyway siihen lisätään esteen täyttämät "indeksit" kun se este luodaan (jos esim este
-	jonka korkeus on 140 lisätään kohtaan 105, niin se täyttää indeksit 105/35=3, 140/35=4,
-	175/35=5, 210/35=6)
-	*/
+	a = 0;
+
 	yArray = [];
 
 	addHole();
@@ -647,14 +600,12 @@ var createObstacleWall = function(x, car, hom, gar, wor) { // Parametrit ovat tr
 	addWalls(x);
 
 	count = count + 1;
-}
+};
 
 var addHole = function() {
 	var position = Math.round(Math.random() * 12);
 	var holeSize = 4;
 	var p = 0;
-
-	//if (count > 80 && Math.random() < 0.01) return;
 
 	do {
 		yArray.push(position);
@@ -662,69 +613,72 @@ var addHole = function() {
 		p = p + 1;
 	} while (p < holeSize - Math.round(Math.random() - 0.4) - Math.floor(count / 25) 
 		|| p < 2 - Math.round(Math.random() - 0.4));
-}
+};
 
 var addObstacles = function(x, car, hom, gar, wor) {
 
 	var position = 0;
 
-	for (var i = 0; i < Math.floor(count / 10); i++) { //lisätään työpaikka (ehkä)
+	//adding work
+	for (var i = 0; i < Math.floor(count / 10); i++) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(4);
 			if (position != -1) {
 				obstacle.push(new Work(x, position * 35 + 100, wor, speed));
-				yArray.push(position, position+1, position+2, position+3); //äsken lisätyn esteen "indeksit" (kts. ylempää)
-				a = a + 1; // turha??
+				yArray.push(position, position+1, position+2, position+3);
+				a = a + 1;
 				break;
 			}
 		}
 	}
 
-	for (i = 0; i < Math.floor(count / 7); i++) { //lisätään koti (ehkä)
+	//adding home
+	for (var i = 0; i < Math.floor(count / 7); i++) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(3);
 			if (position != -1) {
 				obstacle.push(new Home(x, position * 35 + 100, hom, speed));
-				yArray.push(position, position+1, position+2); //äsken lisätyn esteen "indeksit" (kts. ylempää)
-				a = a + 1; // turha??
+				yArray.push(position, position+1, position+2);
+				a = a + 1;
 				break;
 			}
 		}
 	}
 
-	for (i = 0; i < Math.floor(count / 5); i++) { //lisätään autotalli (ehkä)
+	//adding garage
+	for (var i = 0; i < Math.floor(count / 5); i++) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(2);
 			if (position != -1) {
 				obstacle.push(new Garage(x, position * 35 + 100, gar, speed));
-				yArray.push(position, position+1); //äsken lisätyn esteen "indeksit" (kts. ylempää)
-				a = a + 1; // turha??
+				yArray.push(position, position+1);
+				a = a + 1;
 				break;
 			}
 		}
 	}
 
-	for (i = 0; i < Math.floor(count / 2); i++) { //lisätään auto (ehkä)
+	//adding car
+	for (var i = 0; i < Math.floor(count / 2); i++) {
 		if(Math.random() <= obsProp) {
 			position = randomPosition(1);
 			if (position != -1) {
-				//console.log(position);
 				obstacle.push(new Car(x, position * 35 + 100, car, speed));
-				yArray.push(position); //äsken lisätyn esteen "indeksit" (kts. ylempää)
-				a = a + 1; // turha??
+				yArray.push(position);
+				a = a + 1;
 				break;
 			}
 		}
 	}
-}
+};
 
 var addWalls = function(x) {
-	for (var h = 0; h < 15; h++) { // käy läpi indeksit
+	for (var h = 0; h < 15; h++) {
 		if (yArray.indexOf(h) == -1) {
 			obstacle.push(new Wall(x, h * 35 + 100, speed));
-		} // lisää seinän (joka on 35px korkea)
+		}
 	}
-}
+};
 
 var randomPosition = function(height) {
 	var result = -1;
@@ -738,7 +692,7 @@ var randomPosition = function(height) {
 	}
 
 	return result;
-}
+};
 
 var isEmpty = function(position, height) {
 	var res = true;
@@ -748,7 +702,7 @@ var isEmpty = function(position, height) {
 	}
 
 	return res;
-}
+};
 
 var randomKeyPosition = function() {
 	var pos = Math.round(Math.random() * 13) + 1;
@@ -756,4 +710,4 @@ var randomKeyPosition = function() {
 	pos = pos * 35 + 100;
 
 	return pos;
-}
+};
