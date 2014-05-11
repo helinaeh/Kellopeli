@@ -21,7 +21,7 @@ var setCurTime = function(audio) {
 window.onload = function() {
 	format();
 	animate();
-	console.log("onload");
+	//console.log("onload");
 };
 
 var format = function() {
@@ -33,7 +33,7 @@ var format = function() {
 		createButtons();
 		drawMenu();
 		addEventListeners();
-		console.log("format");
+		//console.log("format");
 	});
 };
 
@@ -76,7 +76,7 @@ var createPlayer = function() {
 	//playerImg = player.getImage(player.spriteSrc); //getImage käyttäen playerin omaa metodia
 	playerImg = getImage("images/playersprite.png");
 	player.createKeys();
-	console.log("player.x:" + player.x);
+	//console.log("player.x:" + player.x);
 };
 
 var createObstacles = function() {
@@ -91,7 +91,7 @@ var createObstacles = function() {
 	//createObstacleWall(900, false, false, false, false);
 	//createObstacleWall(650, false, false, false, false);
 	//createObstacleWall(400, false, false, false, false);
-	console.log("createObstacles");
+	//console.log("createObstacles");
 };
 
 /*
@@ -239,7 +239,7 @@ var animate = function() {
 		requestId = window.requestAnimationFrame(animate);	
 	}, 3000);
 	*/
-	console.log("animate: paused: " + paused);
+	//console.log("animate: paused: " + paused);
 };
 
 var timer = function() {
@@ -367,7 +367,7 @@ var update = function() {
 	updateObstacleWall();
 	updatePoints();
 	updateSpeed();
-	console.log("update");
+	//console.log("update");
 };
 
 var updateBg = function() {
@@ -464,7 +464,7 @@ var updatePoints = function() {
 var updateSpeed = function() {
 	if (new Date().getTime() - speedTime > 7000 && speed <= 5) {
 
-		console.log(speed);
+		//console.log(speed);
 
 		speed *= 1.1;
 		player.speed += 0.1;
@@ -520,7 +520,7 @@ var updateObstacleWall = function() {
 		createObstacleWall(900, player.keys.key1, player.keys.key2, player.keys.key3, player.keys.key4);
 		lastTime = thisTime;
 	}
-	console.log("updateObstacleWall");
+	//console.log("updateObstacleWall");
 }
 
 var updateKeys = function() {
@@ -559,7 +559,7 @@ var makeKey = function() {
 		keyArray.push(new Key(randomKeyPosition(), "key1", speed));
 		lastKeyMade = new Date().getTime();
 		
-		console.log(keyArray[0]);
+		//console.log(keyArray[0]);
 		
 		return;
 	}
