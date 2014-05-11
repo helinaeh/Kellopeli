@@ -2,17 +2,21 @@ var canvas, ctx, bgImage, player, playerImg, obstacle, carImg, garImg, homeImg, 
 var carKey, garageKey, homeKey, workKey, watchImg, logo;
 var playerSpriteX = 22, playerSpriteY = 28, bgX1 = 0, bgX2 = 900, points = 0, paused = true, speed = 2, speedTime = new Date().getTime();
 var spriteSpeed = 500, pointSpeed = 100, sumOfDelta = 0, sumOfPoints = 0, lastCalledTime = new Date().getTime();
-var intro;
-var introSrc = "audio/intro.mp3";
+var intro, theme, menu;
+var introSrc = "audio/intro.mp3", themeSrc = "audio/theme.mp3", menuSrc = "audio/menu.mp3";
+var now = 0, seconds = null;
+
+//POISTA KAIKKI TURHAT CONSOLE.LOGIT!!!!
+
 /*
-myVid = document.getElementById("video1");
-var getCurTime = function() { 
-	alert(myVid.currentTime);
+var getCurTime = function(audio) { //audio = document.getElementById-juttu
+	alert(audio.currentTime);
 } 
-var setCurTime = function() { 
-	myVid.currentTime=5;
+var setCurTime = function(audio) { 
+	audio.currentTime=5;
 } 
 */
+
 window.onload = function() {
 	format();
 	animate();
@@ -20,24 +24,26 @@ window.onload = function() {
 };
 
 var format = function() {
-	setCanvas();
-	createPlayer();
-	createObstacles();
-	createKeys();
-	createMenu();
-	createButtons();
-	drawMenu();
-	addEventListeners();
-	console.log("format");
+	setCanvas(function() {
+		createPlayer();
+		createObstacles();
+		createKeys();
+		createMenu();
+		createButtons();
+		drawMenu();
+		addEventListeners();
+		console.log("format");
+	});
 };
 
-var setCanvas = function() {
+var setCanvas = function(callback) {
 	canvas = document.getElementById("game");
 	ctx = canvas.getContext("2d");
 	canvas.width = 900;
 	canvas.height = 625;
 	setBackground();
 	setSounds();
+	callback();
 };
 
 var setBackground = function() {
@@ -46,6 +52,8 @@ var setBackground = function() {
 
 var setSounds = function() {
 	intro = document.getElementById("intro");
+	theme = document.getElementById("theme");
+	menu = document.getElementById("menu");
 };
 
 var getImage = function(path) {
@@ -137,14 +145,14 @@ var createButtons = function() {
 
 var drawMenu = function() {
 	ctx.drawImage(bgImage, 0, 0, 900, 625, 0, 0, canvas.width, canvas.height);
-	//points text
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "18px Georgia";
 	ctx.fillText("SCORE", 110, 50);
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "30px Georgia";
 	ctx.fillText(points, 110, 80);
-	console.log("drawMenu");
+	menu.play();
+	console.log("menu musiikki, " + menu);
 };
 
 var addEventListeners = function() {
@@ -197,11 +205,20 @@ var addEventListeners = function() {
 			pointSpeed = 100;
 			//format();
 			paused = false;
+			menu.pause();
 			intro.play();
+			intro.addEventListener("timeupdate", function() {
+				now = parseInt(intro.currentTime);
+				if (now === 4) {
+					theme.play();
+				}
+			}, false);
 		}
 	}, false);
 	
 };
+
+
 
 var animate = function() {
 	if (!paused) {
@@ -462,6 +479,8 @@ var formatCounts = function() {
 var isGameOver = function() {
 	if (player.x < 0) { //jos pelaaja on pelilaudan ulkopuolella (vasemmalla)
 		paused = true;
+		intro.pause();
+		theme.pause();
 		createButtons();
 		drawMenu();
 		format();
